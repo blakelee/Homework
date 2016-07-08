@@ -1,7 +1,10 @@
-package net.blakelee.homework.MainActivity
+package net.blakelee.homework.mainactivity
 
-/**
- * Created by sk8rb on 6/30/2016.
- */
-interface MainActivityPresenter {
+
+class MainActivityPresenter {
+
+    fun getSubject(index: Int) {
+
+    }
+
 }
