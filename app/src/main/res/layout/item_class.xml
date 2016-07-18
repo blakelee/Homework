@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:weightSum="1"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp">
+
+    <ImageView
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:id="@+id/classPicture"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/presence_online" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/classInfo"
+        android:clickable="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
+        android:src="@android:drawable/ic_menu_info_details"
+        android:contentDescription="" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/classInfo"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false"
+        android:paddingLeft="72dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sample Class Name"
+            android:id="@+id/textClass"
+            android:layout_alignParentStart="false"
+            android:textSize="16sp"
+            android:textColor="@color/primary_text_default_material_light"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MTWThF 8:00a - 3:00p"
+            android:id="@+id/textTimes"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text_default_material_light"
+            android:layout_below="@+id/textClass"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+</RelativeLayout>
