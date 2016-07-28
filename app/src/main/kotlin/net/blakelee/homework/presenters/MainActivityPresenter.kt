@@ -1,4 +1,4 @@
-package net.blakelee.homework.mainactivity
+package net.blakelee.homework.presenters
 
 
 class MainActivityPresenter {

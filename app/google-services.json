@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "659155801653",
+    "firebase_url": "https://homework-2f675.firebaseio.com",
+    "project_id": "homework-2f675",
+    "storage_bucket": "homework-2f675.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659155801653:android:7e8b70dd4a4c9f0f",
+        "android_client_info": {
+          "package_name": "net.blakelee.homework"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659155801653-nb9jufhdab5a2lojufdq23jrk6aksflj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
