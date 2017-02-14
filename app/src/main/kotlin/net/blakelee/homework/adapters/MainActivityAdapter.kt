@@ -11,7 +11,7 @@ class MainActivityAdapter(var classes: List<Classes>) : RecyclerView.Adapter<Mai
 
     override fun getItemCount(): Int = classes.size
 
-    override fun onBindViewHolder(holder: MainItemViewHolder?, position: Int) = holder!!.bind(classes[position])
+    override fun onBindViewHolder(holder: MainItemViewHolder?, position: Int) = holder!!.init(classes[position])
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MainItemViewHolder? =
         MainItemViewHolder(MainItemUI().createView(AnkoContext.create(parent!!.context, parent)))

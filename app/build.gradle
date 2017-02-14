@@ -4,14 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.0'
-
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "net.blakelee.homework"
-        minSdkVersion 16
+        minSdkVersion 22
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        jackOptions { enabled true }
     }
     buildTypes {
         release {
@@ -22,7 +22,14 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
+    }
 }
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -33,13 +40,11 @@ dependencies {
     compile "org.jetbrains.anko:anko-sqlite:$anko_version"
     compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
     compile "org.jetbrains.anko:anko-design:$anko_version"
-
     //compile 'com.google.firebase:firebase-net.blakelee.homework.getDatabase:9.2.1'
-
     // For appcompat-v7 bindings
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
-
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     //apply plugin: 'com.google.gms.google-services'
 }
 repositories {
