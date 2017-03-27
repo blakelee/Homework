@@ -39,8 +39,9 @@ class MainUI(val listAdapter: MainActivityAdapter) : AnkoComponent<Activity> {
                     id = R.id.fab_main
                     imageResource = R.drawable.ic_add_black_24dp //Change this
                     backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(ctx,R.color.accent))
-                    onClick {
-                        toast("Replace with your own action")
+
+                    setOnClickListener {
+                        toast("Insert thing here")
                     }
                 }.lparams {
                     margin = resources.getDimensionPixelSize(R.dimen.fab_margin)
