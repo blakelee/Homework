@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(){
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
             R.id.action_about -> startActivity<AboutActivity>()
+            R.id.action_calandar -> startActivity<CalendarActivity>()
         }
         return super.onOptionsItemSelected(item)
     }
