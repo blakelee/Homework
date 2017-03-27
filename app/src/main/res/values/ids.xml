@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="toolbar_main" type="id"/>
+    <item name="toolbar_calendar" type="id"/>
     <item name="fab_main" type="id"/>
     <item name="class_list" type="id"/>
     <item name="class_icon" type="id"/>
     <item name="class_name" type="id"/>
     <item name="class_times" type="id"/>
+    <item name="calendar_view" type="id"/>
 </resources>
