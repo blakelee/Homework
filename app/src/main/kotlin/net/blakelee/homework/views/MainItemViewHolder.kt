@@ -16,7 +16,7 @@ class MainItemViewHolder(view: View) : RecyclerView.ViewHolder(view){
     val times: TextView = view.find(R.id.class_times)
 
     fun init(classes: Classes) {
-        icon.setImageDrawable(Drawable.createFromPath(classes?.toString()))
+        icon.setImageDrawable(Drawable.createFromPath(classes.toString()))
         name.text = classes.name
         times.text = classes.times
     }
