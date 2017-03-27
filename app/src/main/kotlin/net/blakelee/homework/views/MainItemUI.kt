@@ -10,37 +10,36 @@ import org.jetbrains.anko.*
 class MainItemUI : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
-            relativeLayout() {
-                imageView() {
+            relativeLayout {
+                imageView {
                     id = R.id.class_icon
-                    lparams(width = dip(72), height = dip(72))
                     leftPadding = dip(16)
                     rightPadding = dip(16)
                     topPadding = dip(8)
                     bottomPadding = dip(8)
                     isClickable = true
-                }
+                }.lparams(width = dip(72), height = dip(72))
 
-                verticalLayout() {
+                verticalLayout {
                     lparams(width = matchParent, height = matchParent) {
                         leftMargin = dip(72)
                     }
-                    gravity = verticalGravity
+                     gravity = Gravity.VERTICAL_GRAVITY_MASK
 
                     textView {
                         id = R.id.class_name
-                        text = "Sample Class Name"
+                        textResource = R.string.sample_class_name
                         textSize = 16f
-                        textColor = ContextCompat.getColor(ctx, R.color.primary_text_default_material_light)
+                        textColor = R.color.primary_text_material_light
                         gravity = Gravity.CENTER_VERTICAL
                         maxLines = 1
                     }
 
                     textView {
                         id = R.id.class_times
-                        text = "MTWThF 8:00a - 3:00p"
+                        textResource = R.string.sample_class_time
                         textSize = 14f
-                        textColor = ContextCompat.getColor(ctx, R.color.secondary_text_default_material_light)
+                        textColor = R.color.secondary_text_material_light
                         gravity = Gravity.CENTER_VERTICAL
                         maxLines = 1
                     }
