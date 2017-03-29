@@ -11,7 +11,6 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        jackOptions { enabled true }
     }
 
     buildTypes {
@@ -22,39 +21,30 @@ android {
         }
     }
 
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-
-    /*compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }*/
-
-    productFlavors {
-    }
 }
-
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
 
     // For appcompat-v7 bindings
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:design:25.3.0'
 
     //kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-    //Anko
+
+    //anko
     compile "org.jetbrains.anko:anko-sdk15:$anko_version"
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
     compile "org.jetbrains.anko:anko-sqlite:$anko_version"
     compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
     compile "org.jetbrains.anko:anko-design:$anko_version"
-    //compile 'com.google.firebase:firebase-net.blakelee.homework.getDatabase:9.2.1'
+
+    //caldroid
     compile 'com.roomorama:caldroid:3.0.1'
 }
 repositories {
