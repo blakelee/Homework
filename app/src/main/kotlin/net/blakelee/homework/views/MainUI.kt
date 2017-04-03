@@ -17,6 +17,7 @@ import android.support.v4.view.GravityCompat
 import org.jetbrains.anko.design.coordinatorLayout
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import net.blakelee.homework.activities.EditClassActivity
 
 class MainUI(val listAdapter: MainActivityAdapter) : AnkoComponent<Activity> {
 
@@ -41,7 +42,7 @@ class MainUI(val listAdapter: MainActivityAdapter) : AnkoComponent<Activity> {
                     backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(ctx,R.color.accent))
 
                     setOnClickListener {
-                        toast("Insert thing here")
+                        startActivity<EditClassActivity>()
                     }
                 }.lparams {
                     margin = resources.getDimensionPixelSize(R.dimen.fab_margin)
