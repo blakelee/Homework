@@ -8,4 +8,12 @@
     <item name="class_name" type="id"/>
     <item name="class_times" type="id"/>
     <item name="calendar_view" type="id"/>
+    <item name="edit_class_image" type="id"/>
+
+    <item name="day_picker" type="id"/>
+    <item name="professor_name" type="id"/>
+    <item name="location" type="id"/>
+    <item name="email_address" type="id"/>
+    <item name="phone_number" type="id"/>
+    <item name="credit_hours" type="id"/>
 </resources>
