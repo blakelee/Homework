@@ -45,11 +45,10 @@ class EditClassActivity : AppCompatActivity(), DayPicker.DayDialogListener  {
             val args = Bundle()
             args.putIntegerArrayList("days", daysSelected)
 
-            with (DayPicker()) {
-                arguments = args
-                setTargetFragment(this, DAY_PICKER)
-                show(fragmentManager, "DAY_PICKER")
-            }
+            val dp = DayPicker()
+            dp.arguments = args
+            dp.setTargetFragment(dp, DAY_PICKER)
+            dp.show(fragmentManager, "DAY_PICKER")
         }
     }
 
