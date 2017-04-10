@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.format.DateUtils.LENGTH_SHORTEST
+import android.text.format.DateUtils.getDayOfWeekString
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -14,29 +16,28 @@ import net.blakelee.homework.fragments.DayPicker
 import net.blakelee.homework.views.EditClassUI
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView
+import java.util.*
 
 class EditClassActivity : AppCompatActivity(), DayPicker.DayDialogListener  {
 
     private val PICTURE_RESULT = 100
-    private val DAY_PICKER = 101
     private val imgView by lazy { find<ImageView>(R.id.edit_class_image) }
-    private val daybutton by lazy  {find<Button>(R.id.day_picker )}
+    private val dayButton by lazy  {find<Button>(R.id.day_picker )}
     private val phoneNumber by lazy {find<EditText>(R.id.phone_number)}
     private val text = StringBuilder()
     private var daysSelected = ArrayList<Int>()
 
     override fun onFinishEditDialog(daysSelected: ArrayList<Int>) {
         text.setLength(0)
-        val days = listOf("S", "M", "T", "W", "R", "F", "Sa")
         daysSelected.let {
             for(item in it)
-                text.append(days[item])
+                text.append(getDayOfWeekString(item + 1, LENGTH_SHORTEST)) //Add 1 because I did 0-6
         }
 
         if (text.isEmpty())
             text.append("None")
 
-        daybutton.text = text
+        dayButton.text = text
         this.daysSelected = daysSelected
     }
 
@@ -46,13 +47,12 @@ class EditClassActivity : AppCompatActivity(), DayPicker.DayDialogListener  {
         EditClassUI().setContentView(this)
 
         //Opens a dialogFragment to pick days of the week
-        daybutton.setOnClickListener {
+        dayButton.setOnClickListener {
             val args = Bundle()
             args.putIntegerArrayList("days", daysSelected)
 
             val dp = DayPicker()
             dp.arguments = args
-            dp.setTargetFragment(dp, DAY_PICKER)
             dp.show(fragmentManager, "DAY_PICKER")
         }
 
@@ -108,19 +108,6 @@ class EditClassActivity : AppCompatActivity(), DayPicker.DayDialogListener  {
                         imgView.scaleType = ImageView.ScaleType.CENTER
                     else
                         imgView.scaleType = ImageView.ScaleType.CENTER_CROP
-                }
-            }
-            DAY_PICKER -> when (resultCode) {
-                Activity.RESULT_OK -> {
-                    val daysSelected = data?.getIntArrayExtra("Days Picked")
-                    val text = ""
-                    val days = listOf("s", "m", "t", "w", "tu", "f", "sa")
-                    daysSelected?.let {
-                        for(item in it)
-                            text.plus(days[item])
-
-                        daybutton.text = text
-                    }
                 }
             }
         }
