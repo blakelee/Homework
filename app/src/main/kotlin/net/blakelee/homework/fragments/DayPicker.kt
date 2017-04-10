@@ -4,13 +4,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.DialogFragment
 import android.os.Bundle
+import android.text.format.DateUtils.LENGTH_LONG
+import android.text.format.DateUtils.getDayOfWeekString
+import java.util.*
 
 class DayPicker : DialogFragment() {
-    private val days = listOf(
-            "Sunday", "Monday", "Tuesday", "Wednesday",
-            "Thursday", "Friday", "Saturday")
-
-    private val DAY_PICKER = 101
     private var daysSelected = ArrayList<Int>()
 
     interface DayDialogListener {
@@ -19,15 +17,15 @@ class DayPicker : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
-        val ba = BooleanArray(days.size)
+        val ba = BooleanArray(7)
         daysSelected = arguments.getIntegerArrayList("days")
 
         for(i in daysSelected)
             ba[i] = true
 
         with(builder) {
-            setTitle("Pick Day")
-            setMultiChoiceItems(Array(days.size) { i -> days[i] }, ba) { _, which, isChecked ->
+            setTitle("Class Days")
+            setMultiChoiceItems(Array(7) { i -> getDayOfWeekString(i + 1, LENGTH_LONG) }, ba) { _, which, isChecked ->
                 if (isChecked)
                     daysSelected.add(which)
                 else if (daysSelected.contains(which))
