@@ -1,17 +1,24 @@
 package net.blakelee.homework.views
 
+import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.content.Intent
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.ImageView
 import net.blakelee.homework.R
+import net.blakelee.homework.adapters.EditClassDayAdapter
+import net.blakelee.homework.models.ClassDetails
 import org.jetbrains.anko.*
-class EditClassUI : AnkoComponent<AppCompatActivity> {
+import org.jetbrains.anko.recyclerview.v7.recyclerView
+
+class EditClassUI(val classDetails: ClassDetails, activity: Activity) : AnkoComponent<AppCompatActivity> {
     private val PICTURE_RESULT = 100
 
     override fun createView(ui: AnkoContext<AppCompatActivity>): View = with(ui) {
         scrollView {
+            lparams(width = matchParent)
             verticalLayout {
                 imageView {
                     id = R.id.edit_class_image
@@ -29,35 +36,68 @@ class EditClassUI : AnkoComponent<AppCompatActivity> {
                 }.lparams(width = matchParent, height = dip(200))
 
                 verticalLayout {
-                    textView("Class Name") { padding = dip(0) }
-                    editText { id = R.id.class_name }
-
-                    textView("Days")
-                    button("None") {
-                        id = R.id.day_picker
-                        setAllCaps(false)
+                    textView("Class Name")
+                    editText {
+                        id = R.id.class_name
+                        //text = classDetails.name
                     }
 
+                    textView("Class Days")
+                    recyclerView {
+                        id = R.id.days_recycler
+                    }.lparams(height = wrapContent, width = matchParent)
+
                     textView("Professor Name")
-                    editText { id = R.id.professor_name }
+                    editText {
+                        id = R.id.professor_name
+                        //text = classDetails.professor
+                    }
 
                     textView("Location")
-                    editText { id = R.id.location }
+                    editText {
+                        id = R.id.location
+                        //text = classDetails.location
+                    }
 
                     textView("Email Address")
-                    editText { id = R.id.email_address }
+                    editText {
+                        id = R.id.email_address
+                        //text = classDetails.email
+                    }
 
                     textView("Phone Number")
                     editText {
                         id = R.id.phone_number
                         inputType = android.text.InputType.TYPE_CLASS_PHONE
+                        //text = classDetails.phone
                     }
 
                     textView("Credit Hours")
-                    editText { id = R.id.credit_hours }
+                    editText {
+                        id = R.id.credit_hours
+                        //text = classDetails.hours
+                    }
+
+                    textView("Final")
+                    linearLayout {
+                        button {
+                            id = R.id.final_day
+                            text = classDetails.finals.day
+                        }.lparams(weight = 0.5f)
+
+                        button {
+                            id = R.id.final_start
+                            text = classDetails.finals.startTime
+                        }.lparams(weight = 0.25f)
+
+                        button {
+                            id = R.id.final_end
+                            text = classDetails.finals.endTime
+                        }.lparams(weight = 0.25f)
+                    }
 
                     padding = dip(14)
-                }
+                }.lparams(height = matchParent, width = matchParent)
             }
         }
     }
