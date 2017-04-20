@@ -1,7 +1,6 @@
 package net.blakelee.homework.activities
 
 import android.app.Activity
-import android.app.ActivityManager
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,18 +8,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.format.DateUtils.LENGTH_SHORTEST
-import android.text.format.DateUtils.getDayOfWeekString
+import android.text.format.DateUtils
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import kotlinx.android.synthetic.main.edit_class_days.view.*
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.EditClassDayAdapter
 import net.blakelee.homework.fragments.DayPicker
 import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.ClassDetails
-import net.blakelee.homework.models.Days
+import net.blakelee.homework.models.Day
+import net.blakelee.homework.models.Week
 import net.blakelee.homework.views.EditClassUI
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView
@@ -30,30 +29,32 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface  {
 
     private val PICTURE_RESULT = 100
     private val imgView by lazy { find<ImageView>(R.id.edit_class_image) }
-    private val dayButton by lazy  {find<Button>(R.id.day_picker )}
     private val phoneNumber by lazy {find<EditText>(R.id.phone_number)}
     private val recycler by lazy {find<RecyclerView>(R.id.days_recycler)}
-    private val text = StringBuilder()
-    private var daysSelected = ArrayList<Int>()
-    var classDetails = ClassDetails("", mutableListOf(Days("None", "8:00am", "3:00pm")), "", "", "", "", 0, "", "", Days("Date", "8:00am", "3:00pm"))
+    private var day = Day("None", "8:00am", "3:00pm")
+    private var week = Week(ArrayList(7), day)
+    var classDetails = ClassDetails("", mutableListOf(week), "", "", "", "", 0, "", "", day)
+
+    private lateinit var view : View
 
     override fun onFinishEditDialog(daysSelected: ArrayList<Int>) {
-        text.setLength(0)
+        val text = StringBuilder()
+
         daysSelected.let {
             for(item in it)
-                text.append(getDayOfWeekString(item + 1, LENGTH_SHORTEST)) //Add 1 because I did 0-6
+                text.append(DateUtils.getDayOfWeekString(item + 1, DateUtils.LENGTH_SHORTEST)) //Add 1 because I did 0-6
         }
 
         if (text.isEmpty())
             text.append("None")
 
-        dayButton.text = text
-        this.daysSelected = daysSelected
+        view.day_picker.text = text
     }
 
-    override fun openDaysDialog(daysSelected: ArrayList<Int>) {
+    override fun openDaysDialog(view: View, daysSelected: ArrayList<Int>) {
+        this.view = view
         val args = Bundle()
-        args.putIntegerArrayList("days", daysSelected)
+        args.putIntegerArrayList("week", daysSelected)
 
         val dp = DayPicker()
         dp.arguments = args
@@ -63,17 +64,10 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        /**
-         * This is temporary until I get a db added
-         */
-        //classDetails = ClassDetails("", mutableListOf(Days("None", "8:00am", "3:00pm")), "", "", "", "", 0, "", "", Days("Date", "8:00am", "3:00pm"))
-
-        EditClassUI(classDetails, this).setContentView(this)
+        EditClassUI(classDetails).setContentView(this)
 
         recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = EditClassDayAdapter(classDetails.days, this, recycler)
-
+        recycler.adapter = EditClassDayAdapter(classDetails.week, this, recycler)
 
         //Formats number to appear like (###) ###-####
         phoneNumber.addTextChangedListener(object : TextWatcher {
