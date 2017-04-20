@@ -16,7 +16,8 @@
         </activity>
         <activity android:name=".activities.AboutActivity"/>
         <activity android:name=".activities.CalendarActivity"/>
-        <activity android:name=".activities.EditClassActivity"/>
+        <activity android:name=".activities.EditClassActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
     </application>
 
 </manifest>
