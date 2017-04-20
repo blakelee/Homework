@@ -31,19 +31,21 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     // For appcompat-v7 bindings
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support:design:25.3.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:percent:25.3.1'
 
     //kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     //anko
-    compile "org.jetbrains.anko:anko-sdk23:$anko_version"
+    compile "org.jetbrains.anko:anko-sdk25:$anko_version"
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
     compile "org.jetbrains.anko:anko-sqlite:$anko_version"
     compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
     compile "org.jetbrains.anko:anko-design:$anko_version"
     compile "org.jetbrains.anko:anko-support-v4:$anko_version"
+    compile "org.jetbrains.anko:anko-percent:$anko_version"
 
     //caldroid
     compile 'com.roomorama:caldroid:3.0.1'
