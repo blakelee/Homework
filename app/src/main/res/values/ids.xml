@@ -10,10 +10,19 @@
     <item name="calendar_view" type="id"/>
     <item name="edit_class_image" type="id"/>
 
+    <item name="days_list" type="id"/>
     <item name="day_picker" type="id"/>
+    <item name="day_start" type="id"/>
+    <item name="day_end" type="id"/>
+    <item name="days_recycler" type="id"/>
+    <item name="addremove_day" type="id"/>
     <item name="professor_name" type="id"/>
     <item name="location" type="id"/>
     <item name="email_address" type="id"/>
     <item name="phone_number" type="id"/>
     <item name="credit_hours" type="id"/>
+
+    <item name="final_day" type="id"/>
+    <item name="final_start" type="id"/>
+    <item name="final_end" type="id"/>
 </resources>
