@@ -15,7 +15,7 @@ class DayPicker : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
         val ba = BooleanArray(7)
-        daysSelected = arguments.getIntegerArrayList("days")
+        daysSelected = arguments.getIntegerArrayList("week")
 
         for(i in daysSelected)
             ba[i] = true
