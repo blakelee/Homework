@@ -18,8 +18,6 @@ import net.blakelee.homework.adapters.EditClassDayAdapter
 import net.blakelee.homework.fragments.DayPicker
 import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.ClassDetails
-import net.blakelee.homework.models.Day
-import net.blakelee.homework.models.Week
 import net.blakelee.homework.views.EditClassUI
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView
@@ -31,9 +29,6 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface  {
     private val imgView by lazy { find<ImageView>(R.id.edit_class_image) }
     private val phoneNumber by lazy {find<EditText>(R.id.phone_number)}
     private val recycler by lazy {find<RecyclerView>(R.id.days_recycler)}
-    private var day = Day("None", "8:00am", "3:00pm")
-    private var week = Week(ArrayList(7), day)
-    var classDetails = ClassDetails("", mutableListOf(week), "", "", "", "", 0, "", "", day)
 
     private lateinit var view : View
 
@@ -64,10 +59,10 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        EditClassUI(classDetails).setContentView(this)
+        EditClassUI(ClassDetails()).setContentView(this)
 
         recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = EditClassDayAdapter(classDetails.week, this, recycler)
+        recycler.adapter = EditClassDayAdapter(ClassDetails().week, this, recycler)
 
         //Formats number to appear like (###) ###-####
         phoneNumber.addTextChangedListener(object : TextWatcher {
