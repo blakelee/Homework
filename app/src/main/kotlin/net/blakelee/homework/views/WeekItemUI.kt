@@ -6,8 +6,8 @@ import net.blakelee.homework.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.percent.percentRelativeLayout
 
-class DaysItemUI : AnkoComponent<View> {
-    override fun createView(ui: AnkoContext<View>): View {
+class WeekItemUI : AnkoComponent<ViewGroup> {
+    override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
             percentRelativeLayout {
                 lparams(width = matchParent, height = wrapContent)
