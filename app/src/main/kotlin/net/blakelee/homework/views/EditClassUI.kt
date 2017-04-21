@@ -1,19 +1,16 @@
 package net.blakelee.homework.views
 
-import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.content.Intent
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.ImageView
 import net.blakelee.homework.R
-import net.blakelee.homework.adapters.EditClassDayAdapter
 import net.blakelee.homework.models.ClassDetails
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
-class EditClassUI(val classDetails: ClassDetails, activity: Activity) : AnkoComponent<AppCompatActivity> {
+class EditClassUI(val classDetails: ClassDetails) : AnkoComponent<AppCompatActivity> {
     private val PICTURE_RESULT = 100
 
     override fun createView(ui: AnkoContext<AppCompatActivity>): View = with(ui) {
@@ -39,7 +36,7 @@ class EditClassUI(val classDetails: ClassDetails, activity: Activity) : AnkoComp
                     textView("Class Name")
                     editText {
                         id = R.id.class_name
-                        //text = classDetails.name
+                        setText(classDetails.name)
                     }
 
                     textView("Class Days")
@@ -50,32 +47,32 @@ class EditClassUI(val classDetails: ClassDetails, activity: Activity) : AnkoComp
                     textView("Professor Name")
                     editText {
                         id = R.id.professor_name
-                        //text = classDetails.professor
+                        setText(classDetails.professor)
                     }
 
                     textView("Location")
                     editText {
                         id = R.id.location
-                        //text = classDetails.location
+                        setText(classDetails.location)
                     }
 
                     textView("Email Address")
                     editText {
                         id = R.id.email_address
-                        //text = classDetails.email
+                        setText(classDetails.email)
                     }
 
                     textView("Phone Number")
                     editText {
                         id = R.id.phone_number
                         inputType = android.text.InputType.TYPE_CLASS_PHONE
-                        //text = classDetails.phone
+                        setText(classDetails.phone)
                     }
 
                     textView("Credit Hours")
                     editText {
                         id = R.id.credit_hours
-                        //text = classDetails.hours
+                        setText(classDetails.hours?.toString())
                     }
 
                     textView("Final")
