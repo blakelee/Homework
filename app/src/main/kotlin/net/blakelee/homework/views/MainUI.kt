@@ -18,8 +18,6 @@ import org.jetbrains.anko.design.coordinatorLayout
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import net.blakelee.homework.activities.EditClassActivity
-import net.blakelee.homework.models.ClassDetails
-import net.blakelee.homework.models.Days
 
 class MainUI(val listAdapter: MainActivityAdapter) : AnkoComponent<Activity> {
 
