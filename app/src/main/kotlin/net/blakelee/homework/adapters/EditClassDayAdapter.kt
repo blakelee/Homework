@@ -1,52 +1,41 @@
 package net.blakelee.homework.adapters
 
-import android.app.Activity
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import net.blakelee.homework.R
-import net.blakelee.homework.interfaces.EditClassInterface
-import net.blakelee.homework.models.Days
 import net.blakelee.homework.models.EditDaysItemViewHolder
-import net.blakelee.homework.utils.inflate
-import kotlin.properties.Delegates
+import net.blakelee.homework.interfaces.EditClassAdapterInterface
+import net.blakelee.homework.interfaces.EditClassInterface
+import net.blakelee.homework.models.Day
+import net.blakelee.homework.models.Week
+import net.blakelee.homework.views.WeekItemUI
+import org.jetbrains.anko.AnkoContext
 
-class EditClassDayAdapter(val dayList : MutableList<Days>, activity: Activity, recyclerView: RecyclerView) : RecyclerView.Adapter<EditDaysItemViewHolder>() {
+class EditClassDayAdapter(val week: MutableList<Week>, val editClassInterface: EditClassInterface, val recycler: RecyclerView) : RecyclerView.Adapter<EditDaysItemViewHolder>(), EditClassAdapterInterface {
 
-    val act = activity
-    val recycler = recyclerView
-    var count = 0
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditDaysItemViewHolder {
-        return EditDaysItemViewHolder(parent.inflate(R.layout.edit_class_days))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditDaysItemViewHolder =
+            EditDaysItemViewHolder(WeekItemUI().createView(AnkoContext.create(parent.context, parent)), editClassInterface, this)
 
     override fun onBindViewHolder(holder: EditDaysItemViewHolder?, position: Int) {
-        val day = dayList[position]
-        holder!!.bind(day, act, position, this)
+        val day = week[position]
+        holder!!.bind(day, position)
     }
 
-    override fun getItemCount(): Int {
-        return dayList.size
-    }
+    override fun getItemCount(): Int = week.size
 
-    fun remove(view: View) {
+    override fun removeView(view: View) {
         val position = recycler.getChildAdapterPosition(view)
         if (position != RecyclerView.NO_POSITION) {
-            dayList.removeAt(position)
+            week.removeAt(position)
             notifyItemRemoved(position)
-            //notifyItemRangeChanged(position, itemCount)
         }
     }
 
-    fun add(view: View) {
+    override fun addView(view: View) {
         if (itemCount < 5) {
-
             val position = recycler.getChildAdapterPosition(view)
             if (position != RecyclerView.NO_POSITION) {
-                val day = Days("None", "$count", "3:00pm")
-                dayList.add(itemCount, day)
-                count += 1
+                week.add(itemCount, Week(ArrayList(7), Day("None", "8:00am", "3:00pm")))
                 notifyItemInserted(itemCount - 1)
             }
         }
