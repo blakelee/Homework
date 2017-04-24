@@ -16,9 +16,9 @@ class EditClassDayAdapter(val week: MutableList<Week>, val editClassInterface: E
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditDaysItemViewHolder =
             EditDaysItemViewHolder(WeekItemUI().createView(AnkoContext.create(parent.context, parent)))
 
-    override fun onBindViewHolder(holder: EditDaysItemViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: EditDaysItemViewHolder, position: Int) {
         val week = week[position]
-        holder!!.bind(week, position)
+        holder.bind(week, position)
         holder.itemView.day_start
 
         //Add Remove Views
