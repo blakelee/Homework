@@ -1,6 +1,7 @@
 package net.blakelee.homework.activities
 
 import android.app.Activity
+import android.app.DialogFragment
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.edit_class_days.view.*
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.EditClassDayAdapter
 import net.blakelee.homework.fragments.DayPicker
+import net.blakelee.homework.fragments.TimePicker
 import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.ClassDetails
 import net.blakelee.homework.views.EditClassUI
@@ -54,6 +56,11 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface  {
         val dp = DayPicker()
         dp.arguments = args
         dp.show(fragmentManager, "DAY_PICKER")
+    }
+
+    override fun openTimePicker(view: View, time: String) {
+        val tp : DialogFragment = TimePicker(view, time)
+        tp.show(fragmentManager, "TIME_PICKER")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

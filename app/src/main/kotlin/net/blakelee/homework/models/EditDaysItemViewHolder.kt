@@ -3,6 +3,7 @@ package net.blakelee.homework.models
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.edit_class_days.view.*
+import net.blakelee.homework.R
 import net.blakelee.homework.interfaces.EditClassAdapterInterface
 import net.blakelee.homework.interfaces.EditClassInterface
 
@@ -36,6 +37,17 @@ class EditDaysItemViewHolder(itemView: View, val editClassInterface: EditClassIn
         //Open Day Picker Dialog
         itemView.day_picker.setOnClickListener {
             editClassInterface.openDaysDialog(itemView, daysSelected)
+        }
+
+        //Open Time Picker
+        itemView.day_start.setOnClickListener {
+            itemView.id = R.id.day_start
+            editClassInterface.openTimePicker(itemView, week.day.startTime)
+        }
+
+        itemView.day_end.setOnClickListener {
+            itemView.id = R.id.day_end
+            editClassInterface.openTimePicker(itemView, week.day.endTime)
         }
     }
 }

@@ -5,4 +5,5 @@ import android.view.View
 interface EditClassInterface {
     fun openDaysDialog(view: View, daysSelected: ArrayList<Int>)
     fun onFinishEditDialog(daysSelected : ArrayList<Int>)
+    fun openTimePicker(view: View, time: String)
 }
