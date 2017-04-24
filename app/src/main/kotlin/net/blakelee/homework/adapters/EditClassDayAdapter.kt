@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import net.blakelee.homework.models.EditDaysItemViewHolder
 import net.blakelee.homework.interfaces.EditClassAdapterInterface
 import net.blakelee.homework.interfaces.EditClassInterface
-import net.blakelee.homework.models.Day
 import net.blakelee.homework.models.Week
 import net.blakelee.homework.views.WeekItemUI
 import org.jetbrains.anko.AnkoContext
@@ -35,7 +34,7 @@ class EditClassDayAdapter(val week: MutableList<Week>, val editClassInterface: E
         if (itemCount < 5) {
             val position = recycler.getChildAdapterPosition(view)
             if (position != RecyclerView.NO_POSITION) {
-                week.add(itemCount, Week(ArrayList(7), Day("None", "8:00am", "3:00pm")))
+                week.add(itemCount, Week())
                 notifyItemInserted(itemCount - 1)
             }
         }
