@@ -10,7 +10,7 @@ import net.blakelee.homework.models.ClassDetails
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
-class EditClassUI(val classDetails: ClassDetails) : AnkoComponent<AppCompatActivity> {
+class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActivity> {
     private val PICTURE_RESULT = 100
 
     override fun createView(ui: AnkoContext<AppCompatActivity>): View = with(ui) {
@@ -31,6 +31,9 @@ class EditClassUI(val classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                         ui.owner.startActivityForResult(intent, PICTURE_RESULT)
                     }
                 }.lparams(width = matchParent, height = dip(200))
+
+                /** TODO: Need to add onTextChanged listener for every editText to set the model Because I don't know how to do data binding
+                 */
 
                 verticalLayout {
                     textView("Class Name")
