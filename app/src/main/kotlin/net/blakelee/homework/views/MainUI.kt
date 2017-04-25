@@ -17,6 +17,8 @@ import android.support.v4.view.GravityCompat
 import org.jetbrains.anko.design.coordinatorLayout
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.support.design.widget.AppBarLayout
+import android.support.v7.widget.DividerItemDecoration
 import net.blakelee.homework.activities.EditClassActivity
 
 class MainUI(val listAdapter: MainActivityAdapter) : AnkoComponent<Activity> {
@@ -38,7 +40,7 @@ class MainUI(val listAdapter: MainActivityAdapter) : AnkoComponent<Activity> {
 
                 floatingActionButton {
                     id = R.id.fab_main
-                    imageResource = R.drawable.ic_add_black_24dp //Change this
+                    imageResource = R.drawable.ic_add_black_24dp
                     backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(ctx,R.color.accent))
 
                     setOnClickListener {
@@ -55,10 +57,12 @@ class MainUI(val listAdapter: MainActivityAdapter) : AnkoComponent<Activity> {
                         lparams(width = matchParent, height = matchParent)
                         layoutManager = LinearLayoutManager(ctx)
                         adapter = listAdapter
+                        addItemDecoration(DividerItemDecoration(ctx, LinearLayoutManager.VERTICAL))
                     }
+                }.lparams {
+                    behavior = AppBarLayout.ScrollingViewBehavior()
                 }
             }
         }
     }
-
 }
