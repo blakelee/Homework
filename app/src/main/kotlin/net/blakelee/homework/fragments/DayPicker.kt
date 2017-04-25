@@ -9,13 +9,11 @@ import android.text.format.DateUtils.getDayOfWeekString
 import net.blakelee.homework.interfaces.EditClassInterface
 import java.util.*
 
-class DayPicker : DialogFragment() {
-    private var daysSelected = ArrayList<Int>()
+class DayPicker(val daysSelected : ArrayList<Int>, val position : Int) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
         val ba = BooleanArray(7)
-        daysSelected = arguments.getIntegerArrayList("week")
 
         for(i in daysSelected)
             ba[i] = true
@@ -31,7 +29,7 @@ class DayPicker : DialogFragment() {
             setPositiveButton("OK") { _, _ ->
                 daysSelected.sort()
                 val listener = activity as EditClassInterface
-                listener.onFinishEditDialog(daysSelected)
+                listener.onFinishEditDialog(daysSelected, position)
             }
         }
         return builder.create()
