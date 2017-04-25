@@ -13,8 +13,8 @@ import org.jetbrains.anko.design.coordinatorLayout
 
 class CalendarUI : AnkoComponent<AppCompatActivity> {
     override fun createView(ui: AnkoContext<AppCompatActivity>):View = with(ui) {
-        coordinatorLayout {
-            appBarLayout {
+        relativeLayout {
+            /*appBarLayout {
                 backgroundColor = ContextCompat.getColor(ctx, R.color.primary)
 
                 toolbar {
@@ -22,13 +22,14 @@ class CalendarUI : AnkoComponent<AppCompatActivity> {
                     setTitleTextColor(ContextCompat.getColor(ctx, R.color.icons))
                     overflowIcon!!.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(ctx, R.color.icons), PorterDuff.Mode.MULTIPLY)
                 }
-            }.lparams(width = matchParent)
+            }.lparams(width = matchParent)*/
 
             verticalLayout {
                 //TODO: Figure out R.attr.* instead of a hardcoded number. R.attr.actionBarSize didn't work
-                topPadding = dip(56)
                 id = R.id.calendar_view
-            }
+            }/*.lparams {
+                below(R.id.toolbar_calendar)
+            }*/
         }
     }
 }
