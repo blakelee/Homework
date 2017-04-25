@@ -3,7 +3,7 @@ package net.blakelee.homework.adapters
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import net.blakelee.homework.models.Classes
-import net.blakelee.homework.views.MainItemUI
+import net.blakelee.homework.item_views.MainItemUI
 import net.blakelee.homework.models.MainItemViewHolder
 import org.jetbrains.anko.AnkoContext
 
