@@ -1,4 +1,4 @@
-package net.blakelee.homework.views
+package net.blakelee.homework.item_views
 
 import android.view.View
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import net.blakelee.homework.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.percent.percentRelativeLayout
 
-class WeekItemUI : AnkoComponent<ViewGroup> {
+class EditWeekItemUI : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
             percentRelativeLayout {
