@@ -1,6 +1,5 @@
-package net.blakelee.homework.views
+package net.blakelee.homework.item_views
 
-import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,6 @@ class MainItemUI : AnkoComponent<ViewGroup> {
 
                     textView {
                         id = R.id.class_name
-                        textResource = R.string.sample_class_name
                         textSize = 16f
                         textColor = R.color.primary_text_material_light
                         gravity = Gravity.CENTER_VERTICAL
@@ -37,11 +35,10 @@ class MainItemUI : AnkoComponent<ViewGroup> {
 
                     textView {
                         id = R.id.class_times
-                        textResource = R.string.sample_class_time
                         textSize = 14f
                         textColor = R.color.secondary_text_material_light
                         gravity = Gravity.CENTER_VERTICAL
-                        maxLines = 1
+                        maxLines = 3
                     }
                 }
             }
