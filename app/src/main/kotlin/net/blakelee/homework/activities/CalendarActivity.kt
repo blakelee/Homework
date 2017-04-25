@@ -16,7 +16,7 @@ class CalendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         CalendarUI().setContentView(this)
-        setSupportActionBar(find<Toolbar>(R.id.toolbar_calendar) as Toolbar?)
+        //setSupportActionBar(find<Toolbar>(R.id.toolbar_calendar) as Toolbar?)
         initCalendar()
     }
 
