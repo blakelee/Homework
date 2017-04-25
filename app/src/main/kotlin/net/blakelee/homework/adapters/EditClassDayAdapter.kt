@@ -4,22 +4,25 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.edit_class_days.view.*
-import net.blakelee.homework.R
 import net.blakelee.homework.models.EditDaysItemViewHolder
 import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.Week
-import net.blakelee.homework.views.WeekItemUI
+import net.blakelee.homework.item_views.EditWeekItemUI
 import org.jetbrains.anko.AnkoContext
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
-class EditClassDayAdapter(val week: MutableList<Week>, val editClassInterface: EditClassInterface, val recycler: RecyclerView) : RecyclerView.Adapter<EditDaysItemViewHolder>() {
+class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: EditClassInterface, val recycler: RecyclerView) : RecyclerView.Adapter<EditDaysItemViewHolder>() {
+
+    val dateFormat : DateFormat = SimpleDateFormat("h:mma", Locale.getDefault())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditDaysItemViewHolder =
-            EditDaysItemViewHolder(WeekItemUI().createView(AnkoContext.create(parent.context, parent)))
+            EditDaysItemViewHolder(EditWeekItemUI().createView(AnkoContext.create(parent.context, parent)))
 
     override fun onBindViewHolder(holder: EditDaysItemViewHolder, position: Int) {
-        val week = week[position]
-        holder.bind(week, position)
-        holder.itemView.day_start
+
+        holder.bind(week[position], position)
 
         //Add Remove Views
         if (position > 0)
@@ -28,17 +31,42 @@ class EditClassDayAdapter(val week: MutableList<Week>, val editClassInterface: E
             holder.itemView.addremove_day.setOnClickListener { addView(holder.itemView) }
 
         //Open Day Picker Dialog
-        holder.itemView.day_picker.setOnClickListener { editClassInterface.openDaysDialog(holder.itemView, holder.daysSelected) }
+        holder.itemView.day_picker.setOnClickListener { editClassInterface.openDaysDialog(week[position].week, position) }
 
         //Open Time Picker
         holder.itemView.day_start.setOnClickListener {
-            holder.itemView.id = R.id.day_start
-            editClassInterface.openTimePicker(holder.itemView, week.day.startTime)
+            val endTime = week[position].day.endTime
+
+            fun compareTime(newTime: String) : Int {
+                val date1 : Date = dateFormat.parse(newTime)
+                val date2 : Date = dateFormat.parse(endTime)
+
+                if (date1 <= date2) {
+                    week[position].day.startTime = newTime
+                    notifyItemChanged(position)
+                }
+
+                return date1.compareTo(date2)
+            }
+            editClassInterface.openTimePicker(week[position].day.startTime, ::compareTime )
         }
 
         holder.itemView.day_end.setOnClickListener {
-            holder.itemView.id = R.id.day_end
-            editClassInterface.openTimePicker(holder.itemView, week.day.endTime)
+            val startTime = week[position].day.startTime
+
+            fun compareTime(newTime: String) : Int {
+                val date1 : Date = dateFormat.parse(startTime)
+                val date2 : Date = dateFormat.parse(newTime)
+
+                if (date1 <= date2) {
+                    week[position].day.endTime = newTime
+                    notifyItemChanged(position)
+                }
+                    //holder.itemView.day_end.text = newTime
+
+                return date1.compareTo(date2)
+            }
+            editClassInterface.openTimePicker(week[position].day.endTime, ::compareTime)
         }
     }
 
