@@ -1,9 +1,7 @@
 package net.blakelee.homework.interfaces
 
-import android.view.View
-
 interface EditClassInterface {
-    fun openDaysDialog(view: View, daysSelected: ArrayList<Int>)
-    fun onFinishEditDialog(daysSelected : ArrayList<Int>)
-    fun openTimePicker(view: View, time: String)
+    fun openDaysDialog(daysSelected: ArrayList<Int>, position: Int)
+    fun onFinishEditDialog(daysSelected : ArrayList<Int>, position : Int)
+    fun openTimePicker(time: String, compareTime: (String) -> Int)
 }
