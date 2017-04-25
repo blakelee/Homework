@@ -1,13 +1,13 @@
 package net.blakelee.homework.models
 
-data class ClassDetails(val name: String = "",
-                        val week: MutableList<Week> = mutableListOf(Week()),
-                        val location: String = "",
-                        val syllabus: String = "",
-                        val email: String = "",
-                        val phone: String = "",
-                        val hours: Int? = null,
-                        val image: String = "",
-                        val professor: String = "",
-                        val finals: Day = Day()
+data class ClassDetails(var name: String = "",
+                        var week: MutableList<Week> = mutableListOf(Week()),
+                        var location: String = "",
+                        var syllabus: String = "",
+                        var email: String = "",
+                        var phone: String = "",
+                        var hours: Int? = null,
+                        var image: String = "",
+                        var professor: String = "",
+                        var finals: Day = Day()
 )

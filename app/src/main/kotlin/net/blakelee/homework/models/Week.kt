@@ -1,6 +1,6 @@
 package net.blakelee.homework.models
 
 data class Week (
-        val week : ArrayList<Int> = ArrayList(7),
-        val day : Day = Day()
+        var week : ArrayList<Int> = ArrayList(7),
+        var day : Day = Day()
 )
