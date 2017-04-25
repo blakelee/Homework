@@ -14,7 +14,9 @@ import org.jetbrains.anko.find
 
 class MainActivity : AppCompatActivity(){
 
-    private val classAdapter: MainActivityAdapter = MainActivityAdapter(emptyList<Classes>())
+    //Dummy data
+    private val classes = listOf(Classes(), Classes(), Classes())
+    private val classAdapter: MainActivityAdapter = MainActivityAdapter(classes)
 
     override fun onCreate(savedInstantState: Bundle?) {
         super.onCreate(savedInstantState)
