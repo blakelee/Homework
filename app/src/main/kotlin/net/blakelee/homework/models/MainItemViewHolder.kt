@@ -18,7 +18,7 @@ class MainItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         icon.setImageResource(R.drawable.science)
         name.text = classes.name
         var s : String = ""
-        for(s2: String in classes.times)
+        for(s2: String in classes.getTimes())
             s = s + s2 + "\n"
 
         s = s.dropLast(1)
