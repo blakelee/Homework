@@ -11,6 +11,10 @@
     <item name="calendar_view" type="id"/>
     <item name="edit_class_image" type="id"/>
     <item name="tab_layout" type="id"/>
+    <item name="toolbar_edit" type="id"/>
+
+    <item name="action_cancel" type="id"/>
+    <item name="action_save" type="id"/>
 
     <item name="days_list" type="id"/>
     <item name="day_picker" type="id"/>
