@@ -74,8 +74,8 @@ class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponen
                         textView("Final")
                         linearLayout {
                             textView(classDetails.finals.day).lparams(weight = 0.5f)
-                            textView(classDetails.finals.startTime)}.lparams(weight = 0.25f)
-                            textView(classDetails.finals.endTime).lparams(weight = 0.25f)
+                            textView(classDetails.finals.getStartTime())}.lparams(weight = 0.25f)
+                            textView(classDetails.finals.getEndTime()).lparams(weight = 0.25f)
                         }
                     }
 
