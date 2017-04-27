@@ -9,16 +9,11 @@ import android.widget.TimePicker
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.okButton
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
-class TimePicker (var time: String, val compareTime: (String) -> Int): DialogFragment(), TimePickerDialog.OnTimeSetListener {
-
-    val dateFormat : DateFormat = SimpleDateFormat("h:mma", Locale.getDefault())
+class TimePicker (var date: Date, val compareTime: (Date) -> Int): DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val date = dateFormat.parse(time)
         return TimePickerDialog(ctx, this, date.hours, date.minutes, false)
     }
 
@@ -26,10 +21,13 @@ class TimePicker (var time: String, val compareTime: (String) -> Int): DialogFra
         val cal = Calendar.getInstance()
         cal.set(Calendar.HOUR_OF_DAY, hour)
         cal.set(Calendar.MINUTE, minute)
+        cal.set(Calendar.YEAR, 1970)
+        cal.set(Calendar.DAY_OF_YEAR, 1)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MONTH, 0)
+        cal.set(Calendar.MILLISECOND, 0)
 
-        val newTime = dateFormat.format(cal.time)
-
-        if (compareTime(newTime) > 0)
+        if (compareTime(cal.time) > 0)
             alert("Start time must be before end time") { okButton{} }.show()
     }
 }
