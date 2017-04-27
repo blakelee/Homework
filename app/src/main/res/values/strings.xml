@@ -8,5 +8,8 @@
     <string name="about_text">This is the about screen giving details about stuff</string>
     <string name="sample_class_name">"Sample Class Name"</string>
     <string name="sample_class_time">"MTWThF 8:00a - 3:00p"</string>
-
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="new_class">New Class</string>
+    <string name="edit_class">Edit Class</string>
 </resources>
