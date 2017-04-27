@@ -9,13 +9,9 @@ import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.Week
 import net.blakelee.homework.item_views.EditWeekItemUI
 import org.jetbrains.anko.AnkoContext
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: EditClassInterface, val recycler: RecyclerView) : RecyclerView.Adapter<EditDaysItemViewHolder>() {
-
-    val dateFormat : DateFormat = SimpleDateFormat("h:mma", Locale.getDefault())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditDaysItemViewHolder =
             EditDaysItemViewHolder(EditWeekItemUI().createView(AnkoContext.create(parent.context, parent)))
@@ -31,41 +27,39 @@ class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: E
             holder.itemView.addremove_day.setOnClickListener { addView(holder.itemView) }
 
         //Open Day Picker Dialog
-        holder.itemView.day_picker.setOnClickListener { editClassInterface.openDaysDialog(week[position].week, position) }
+        holder.itemView.day_picker.setOnClickListener { editClassInterface.openDaysDialog(week[position].getWeek(), position) }
+
+        var which : Int = 0
+        var endTime = week[position].day.endTime
+        var startTime = week[position].day.startTime
+
+        fun compareTime(newTime : Date) : Int {
+            if (which == 1) {
+                if (startTime <= newTime) {
+                    week[position].day.endTime = newTime
+                    notifyItemChanged(position)
+                    endTime = newTime
+                }
+                return startTime.compareTo(newTime)
+            }
+            else {
+                if (newTime <= endTime) {
+                    week[position].day.startTime = newTime
+                    notifyItemChanged(position)
+                    startTime = newTime
+                }
+                return newTime.compareTo(endTime)
+            }
+        }
 
         //Open Time Picker
         holder.itemView.day_start.setOnClickListener {
-            val endTime = week[position].day.endTime
-
-            fun compareTime(newTime: String) : Int {
-                val date1 : Date = dateFormat.parse(newTime)
-                val date2 : Date = dateFormat.parse(endTime)
-
-                if (date1 <= date2) {
-                    week[position].day.startTime = newTime
-                    notifyItemChanged(position)
-                }
-
-                return date1.compareTo(date2)
-            }
+            which = 0
             editClassInterface.openTimePicker(week[position].day.startTime, ::compareTime )
         }
 
         holder.itemView.day_end.setOnClickListener {
-            val startTime = week[position].day.startTime
-
-            fun compareTime(newTime: String) : Int {
-                val date1 : Date = dateFormat.parse(startTime)
-                val date2 : Date = dateFormat.parse(newTime)
-
-                if (date1 <= date2) {
-                    week[position].day.endTime = newTime
-                    notifyItemChanged(position)
-                }
-                    //holder.itemView.day_end.text = newTime
-
-                return date1.compareTo(date2)
-            }
+            which = 1
             editClassInterface.openTimePicker(week[position].day.endTime, ::compareTime)
         }
     }
