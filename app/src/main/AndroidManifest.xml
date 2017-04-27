@@ -17,7 +17,8 @@
         <activity android:name=".activities.AboutActivity" />
         <activity android:name=".activities.CalendarActivity" />
         <activity android:name=".activities.EditClassActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.ClassDetailsActivity"/>
     </application>
 
