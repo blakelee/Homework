@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.FragmentActivity
 import android.support.v4.view.ViewPager
+import io.realm.RealmList
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.ClassDetailsPagerAdapter
 import net.blakelee.homework.models.ClassDetails
@@ -19,7 +20,7 @@ class ClassDetailsActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
 
         //Dummy data
-        val classDetails = ClassDetails("Psychology 101", mutableListOf(Week(), Week()), "", "", "test@gmail.com", "(555) 123-4567", null, "", "Mrs. Puff", Day())
+        val classDetails = ClassDetails("Psychology 101", RealmList(Week(), Week()), "", "", "test@gmail.com", "(555) 123-4567", null, "", "Mrs. Puff", Day())
 
         ClassDetailsUI().setContentView(this)
 
