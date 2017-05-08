@@ -122,8 +122,9 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                         textView("Final")
                         linearLayout {
                             button {
+                                setAllCaps(false)
                                 id = R.id.final_day
-                                text = classDetails.finals.day
+                                text = classDetails.finals.getDay()
                             }.lparams(weight = 0.5f)
 
                             button {

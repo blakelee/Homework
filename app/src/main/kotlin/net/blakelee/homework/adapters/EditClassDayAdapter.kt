@@ -27,16 +27,16 @@ class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: E
             holder.itemView.addremove_day.setOnClickListener { addView(holder.itemView) }
 
         //Open Day Picker Dialog
-        holder.itemView.day_picker.setOnClickListener { editClassInterface.openDaysDialog(week[position].getWeek(), position) }
+        holder.itemView.day_picker.setOnClickListener { editClassInterface.openDaysDialog(week[position].day, position) }
 
         var which : Int = 0
-        var endTime = week[position].day.endTime
-        var startTime = week[position].day.startTime
+        var endTime = week[position].endTime
+        var startTime = week[position].startTime
 
         fun compareTime(newTime : Date) : Int {
             if (which == 1) {
                 if (startTime <= newTime) {
-                    week[position].day.endTime = newTime
+                    week[position].endTime = newTime
                     notifyItemChanged(position)
                     endTime = newTime
                 }
@@ -44,7 +44,7 @@ class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: E
             }
             else {
                 if (newTime <= endTime) {
-                    week[position].day.startTime = newTime
+                    week[position].startTime = newTime
                     notifyItemChanged(position)
                     startTime = newTime
                 }
@@ -55,12 +55,12 @@ class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: E
         //Open Time Picker
         holder.itemView.day_start.setOnClickListener {
             which = 0
-            editClassInterface.openTimePicker(week[position].day.startTime, ::compareTime )
+            editClassInterface.openTimePicker(week[position].startTime, ::compareTime )
         }
 
         holder.itemView.day_end.setOnClickListener {
             which = 1
-            editClassInterface.openTimePicker(week[position].day.endTime, ::compareTime)
+            editClassInterface.openTimePicker(week[position].endTime, ::compareTime)
         }
     }
 

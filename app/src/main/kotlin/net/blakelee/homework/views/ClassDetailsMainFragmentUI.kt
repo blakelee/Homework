@@ -70,10 +70,10 @@ class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponen
                         }
                     }
 
-                    if (classDetails.finals.day != "None") {
+                    if (classDetails.finals.getDay() != "None") {
                         textView("Final")
                         linearLayout {
-                            textView(classDetails.finals.day).lparams(weight = 0.5f)
+                            textView(classDetails.finals.getDay()).lparams(weight = 0.5f)
                             textView(classDetails.finals.getStartTime())}.lparams(weight = 0.25f)
                             textView(classDetails.finals.getEndTime()).lparams(weight = 0.25f)
                         }
