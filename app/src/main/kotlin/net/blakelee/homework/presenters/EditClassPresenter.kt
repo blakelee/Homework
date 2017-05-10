@@ -1,27 +1,29 @@
 package net.blakelee.homework.presenters
 
-import io.realm.Realm
+import com.raizlabs.android.dbflow.config.FlowManager
 import net.blakelee.homework.activities.EditClassActivity
 import net.blakelee.homework.databases.ClassDetailsRepository
 import net.blakelee.homework.interfaces.EditClassPresenterInterface
 import net.blakelee.homework.models.ClassDetails
-import kotlin.properties.Delegates
+import org.jetbrains.anko.ctx
+import com.raizlabs.android.dbflow.config.FlowConfig
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
+import org.jetbrains.anko.warn
 
-class EditClassPresenter(className : String? = null, private var view : EditClassActivity?) : EditClassPresenterInterface {
 
-    private var realm : Realm by Delegates.notNull()
+class EditClassPresenter(val className : String? = null, private var view : EditClassActivity?) : EditClassPresenterInterface, AnkoLogger {
+
     private var classDetails : ClassDetails? = null
-    private val classDetailsRepository = ClassDetailsRepository()
+    private val classDetailsRepository = ClassDetailsRepository(this)
 
     init {
-        Realm.init(view)
-        realm = Realm.getDefaultInstance()
+        FlowManager.init(FlowConfig.Builder(view!!.ctx).build())
 
         if (className != null)
-            classDetailsRepository.getClass(className, this::onGetClassSuccess)
+            classDetailsRepository.getClass(className)
         else
             onGetClassSuccess(ClassDetails())
-
     }
 
 
@@ -32,6 +34,24 @@ class EditClassPresenter(className : String? = null, private var view : EditClas
     override fun onGetClassSuccess(classDetails : ClassDetails) {
         this.classDetails = classDetails
         view?.setClassDetails(classDetails)
+        info("Successfully got class $classDetails.name")
+    }
+
+    /**
+     * This should only happen if the database is corrupt from not deleting previous data
+     * or I have dummy data somewhere
+     */
+    override fun onGetClassFailure(classDetails : ClassDetails) {
+        this.classDetails = classDetails
+        view?.setClassDetails(classDetails)
+        error("Couldn't get class $className")
+    }
+
+    fun save() {
+        if (className == null)
+            classDetailsRepository.addClass(classDetails!!)
+        else
+            classDetailsRepository.changeClass(classDetails!!)
     }
 
     /**
@@ -39,7 +59,13 @@ class EditClassPresenter(className : String? = null, private var view : EditClas
      * The parent activity needs to notifyItemChanged on its adapter
      */
     override fun onChangeClassSuccess() {
-
+        if (className != null) {
+            info("Class successfully changed")
+        }
+        else {
+            warn("No class found, class being added")
+            onAddClassSuccess()
+        }
     }
 
     /**
@@ -47,10 +73,20 @@ class EditClassPresenter(className : String? = null, private var view : EditClas
      * The parent activity needs to call notifyItemAdded on its adapter
      */
     override fun onAddClassSuccess() {
+        info("Class successfully added")
+    }
 
+    /**
+     * This occurs when trying to add a class but the name of the class already exists
+     * in the database
+     */
+    override fun onAddClassFailure() {
+        view?.validate(false)
+        warn("Adding class failed, name conflict")
     }
 
     override fun onDestroy() {
         view = null
+        FlowManager.destroy()
     }
 }
