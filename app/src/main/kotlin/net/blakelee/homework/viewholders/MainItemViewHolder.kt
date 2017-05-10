@@ -1,4 +1,4 @@
-package net.blakelee.homework.models
+package net.blakelee.homework.viewholders
 
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import net.blakelee.homework.R
 import net.blakelee.homework.activities.ClassDetailsActivity
+import net.blakelee.homework.models.Classes
 import org.jetbrains.anko.find
 
 class MainItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -18,7 +19,7 @@ class MainItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         icon.setImageResource(R.drawable.science)
         name.text = classes.name
         var s : String = ""
-        for(s2: String in classes.getTimes())
+        for(s2: String in classes.times)
             s = s + s2 + "\n"
 
         s = s.dropLast(1)
