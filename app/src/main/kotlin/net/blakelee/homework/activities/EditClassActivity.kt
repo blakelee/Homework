@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.telephony.PhoneNumberFormattingTextWatcher
-import android.text.format.DateUtils
 import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
@@ -22,6 +21,7 @@ import net.blakelee.homework.fragments.DayPicker
 import net.blakelee.homework.fragments.TimePicker
 import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.ClassDetails
+import net.blakelee.homework.models.Week
 import net.blakelee.homework.presenters.EditClassPresenter
 import net.blakelee.homework.views.EditClassUI
 import org.jetbrains.anko.*
@@ -33,26 +33,17 @@ class EditClassActivity(val className : String? = null) : AppCompatActivity(), E
     private val imgView by lazy { find<ImageView>(R.id.edit_class_image) }
     private val phoneNumber by lazy {find<EditText>(R.id.phone_number)}
     private val recycler by lazy {find<RecyclerView>(R.id.days_recycler)}
+    private val nameText by lazy {find<EditText>(R.id.class_name)}
+    private var validName : Boolean = true
     private lateinit var classDetails : ClassDetails
     private lateinit var presenter : EditClassPresenter
 
-    override fun onFinishEditDialog(daysSelected: List<String>, position: Int) {
-        val text = StringBuilder()
-
-        daysSelected.let {
-            for(item in it)
-                text.append(DateUtils.getDayOfWeekString(item.toInt() + 1, DateUtils.LENGTH_SHORTEST)) //Add 1 because I did 0-6
-        }
-
-        if (text.isEmpty())
-            text.append("None")
-
-        classDetails.week[position].setWeek(daysSelected)
-        classDetails.week[position].day.day = text.toString()
+    override fun onFinishEditDialog(daysSelected: List<Int>, position: Int) {
+        classDetails.week[position].day = daysSelected
         recycler.adapter.notifyItemChanged(position)
     }
 
-    override fun openDaysDialog(daysSelected: List<String>, position: Int) {
+    override fun openDaysDialog(daysSelected: List<Int>, position: Int) {
         val dp = DayPicker(daysSelected, position)
         dp.show(fragmentManager, "DAY_PICKER")
     }
@@ -102,9 +93,42 @@ class EditClassActivity(val className : String? = null) : AppCompatActivity(), E
                 NavUtils.navigateUpFromSameTask(this)
                 return true
             }
-            //R.id.action_save ->
+            R.id.action_save -> {
+                if (validate(validName)) {
+                    presenter.save()
+                    if (validName) { //A save can change validName
+                        NavUtils.navigateUpFromSameTask(this)
+                        return true
+                    }
+                }
+                return false
+            }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun validate(validName : Boolean) : Boolean {
+        this.validName = validName
+
+        if (!validName)
+            nameText.error = "Class name is the same as an existing class name"
+
+        else if (classDetails.name.isNotEmpty()) {
+            for(item : Week in classDetails.week) {
+                val week = item.day
+
+                if (week.isEmpty()) {
+                    alert("You can't have no class days selected") { okButton{} }.show()
+                    break
+                }
+            }
+            return true
+        }
+
+        else
+            nameText.error = "You must have a class name"
+
+        return false
     }
 
     override fun onBackPressed() {
