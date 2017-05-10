@@ -1,44 +1,42 @@
-package net.blakelee.homework.item_views
+package net.blakelee.homework.views.items
 
-import android.view.View
 import android.view.ViewGroup
-import net.blakelee.homework.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.percent.percentRelativeLayout
 
-class EditWeekItemUI : AnkoComponent<ViewGroup> {
-    override fun createView(ui: AnkoContext<ViewGroup>): View {
+class EditWeekItemUI : org.jetbrains.anko.AnkoComponent<ViewGroup> {
+    override fun createView(ui: org.jetbrains.anko.AnkoContext<ViewGroup>): android.view.View {
         return with(ui) {
             percentRelativeLayout {
-                lparams(width = matchParent, height = wrapContent)
+                lparams(width = org.jetbrains.anko.matchParent, height = org.jetbrains.anko.wrapContent)
                 button {
-                    id = R.id.day_picker
+                    id = net.blakelee.homework.R.id.day_picker
                     setAllCaps(false)
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.4f
                 }
 
                 button {
-                    id = R.id.day_start
+                    id = net.blakelee.homework.R.id.day_start
                     setAllCaps(false)
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.25f
-                    rightOf(R.id.day_picker)
+                    rightOf(net.blakelee.homework.R.id.day_picker)
                 }
 
                 button {
-                    id = R.id.day_end
+                    id = net.blakelee.homework.R.id.day_end
                     setAllCaps(false)
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.25f
-                    rightOf(R.id.day_start)
+                    rightOf(net.blakelee.homework.R.id.day_start)
                 }
 
                 button("+") {
-                    id = R.id.addremove_day
+                    id = net.blakelee.homework.R.id.addremove_day
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.1f
-                    rightOf(R.id.day_end)
+                    rightOf(net.blakelee.homework.R.id.day_end)
                 }
             }
         }
