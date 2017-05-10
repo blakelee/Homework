@@ -5,9 +5,9 @@ import android.net.Uri
 import android.support.v4.app.Fragment
 import android.view.View
 import net.blakelee.homework.R
-import net.blakelee.homework.item_views.WeekItemUI
 import net.blakelee.homework.models.ClassDetails
 import net.blakelee.homework.models.Week
+import net.blakelee.homework.views.items.WeekItemUI
 import org.jetbrains.anko.*
 import java.io.File
 
