@@ -1,25 +1,28 @@
 package net.blakelee.homework.models
 
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.Index
-import io.realm.annotations.PrimaryKey
-import io.realm.annotations.RealmClass
+import com.raizlabs.android.dbflow.annotation.PrimaryKey
+import com.raizlabs.android.dbflow.annotation.Table
+import net.blakelee.homework.databases.AppDatabase
 
-@RealmClass
-open class ClassDetails (
+@Table(database = AppDatabase::class)
+class ClassDetails (
 
         @PrimaryKey
-        @Index
-        open var name: String = "",
+        var name: String = "",
 
-        open var week: RealmList<Week> = RealmList(Week()),
-        open var location: String = "",
-        open var syllabus: String = "",
-        open var email: String = "",
-        open var phone: String = "",
-        open var hours: Int? = null,
-        open var image: String = "",
-        open var professor: String = "",
-        open var finals: Day = Day()
-) : RealmObject()
+        var location: String = "",
+        var syllabus: String = "",
+        var email: String = "",
+        var phone: String = "",
+        var hours: Int? = null,
+        var image: String = "",
+        var professor: String = "",
+        var finals: Day = Day()
+) {
+
+    var week: MutableList<Week> = mutableListOf(Week())
+        get() {
+            //week = Select().from(Week::class).where()
+            return mutableListOf(Week())
+        }
+}
