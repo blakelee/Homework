@@ -16,7 +16,7 @@ open class Week (
 
         day.let {
             for(item in it)
-                text.append(DateUtils.getDayOfWeekString(item.toInt() + 1, DateUtils.LENGTH_SHORTEST)) //Add 1 because I did 0-6
+                text.append(DateUtils.getDayOfWeekString(item + 1, DateUtils.LENGTH_SHORTEST)) //Add 1 because I did 0-6
 
             if (text.isEmpty())
                 return "None"
