@@ -1,9 +1,10 @@
-package net.blakelee.homework.models
+package net.blakelee.homework.viewholders
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import net.blakelee.homework.R
+import net.blakelee.homework.models.Week
 import org.jetbrains.anko.find
 
 class EditDaysItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -14,9 +15,9 @@ class EditDaysItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val add_remove = view.find<Button>(R.id.addremove_day)
 
     fun bind(week: Week, position: Int) {
-        day_picker.text = week.day.day
-        day_start.text = week.day.getStartTime()
-        day_end.text = week.day.getEndTime()
+        day_picker.text = week.getDay()
+        day_start.text = week.getStartTime()
+        day_end.text = week.getEndTime()
 
         if (position > 0)
             add_remove.text = "-"
