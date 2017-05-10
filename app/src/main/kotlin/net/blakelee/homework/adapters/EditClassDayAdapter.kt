@@ -4,10 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.edit_class_days.view.*
-import net.blakelee.homework.models.EditDaysItemViewHolder
+import net.blakelee.homework.viewholders.EditDaysItemViewHolder
 import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.Week
-import net.blakelee.homework.item_views.EditWeekItemUI
+import net.blakelee.homework.views.items.EditWeekItemUI
 import org.jetbrains.anko.AnkoContext
 import java.util.*
 
