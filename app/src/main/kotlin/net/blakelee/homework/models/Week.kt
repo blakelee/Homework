@@ -1,24 +1,27 @@
 package net.blakelee.homework.models
 
-import io.realm.RealmObject
+import android.text.format.DateUtils
+import com.raizlabs.android.dbflow.annotation.Column
+import com.raizlabs.android.dbflow.annotation.Table
+import net.blakelee.homework.databases.AppDatabase
 
+@Table(database = AppDatabase::class)
 open class Week (
-    open var week: String = "",
-    open var day : Day = Day()
+        @Column
+         var day : List<Int> = listOf()
+) : BaseDay() {
 
-) : RealmObject() {
+    fun getDay() : String {
+        val text = StringBuilder()
 
-    fun getWeek() : List<String> {
-        val week = week.split(",,,,")
-        if (week[0] == "")
-            return listOf()
-        return week
-    }
+        day.let {
+            for(item in it)
+                text.append(DateUtils.getDayOfWeekString(item.toInt() + 1, DateUtils.LENGTH_SHORTEST)) //Add 1 because I did 0-6
 
-    fun setWeek(weeks : List<String>?) {
-        if (weeks == null)
-            week = ""
-        else
-            week = weeks.joinToString(",,,,")
+            if (text.isEmpty())
+                return "None"
+
+            return text.toString()
+        }
     }
 }
