@@ -1,4 +1,4 @@
-package net.blakelee.homework.item_views
+package net.blakelee.homework.views.items
 
 import android.view.View
 import android.view.ViewGroup
