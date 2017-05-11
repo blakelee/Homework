@@ -2,15 +2,15 @@ package net.blakelee.homework.models
 
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
+import com.raizlabs.android.dbflow.structure.BaseModel
 import net.blakelee.homework.databases.AppDatabase
 
-//TODO: Change to null since this is just dummy data
-@Table(database = AppDatabase::class)
-open class Classes (
+@Table(database = AppDatabase::class, allFields = true)
+class Classes (
 
         @PrimaryKey
-        var name: String = "Psychology 101",
-
-        var times: List<String> = listOf("MWF 8:00am-10:00am", "TT 10:00am-11:00am", "S 12:00pm-1:00pm"),
+        var id: Int = 0,
+        var name: String = "",
+        var weeks: Weeks = Weeks(),
         var icon: String = ""
-)
+) : BaseModel()
