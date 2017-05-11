@@ -12,6 +12,7 @@
     <item name="edit_class_image" type="id"/>
     <item name="tab_layout" type="id"/>
     <item name="toolbar_edit" type="id"/>
+    <item name="icon_date" type="id"/>
 
     <item name="action_cancel" type="id"/>
     <item name="action_save" type="id"/>
