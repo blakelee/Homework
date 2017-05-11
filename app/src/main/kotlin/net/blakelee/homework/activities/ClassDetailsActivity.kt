@@ -6,29 +6,28 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.view.ViewPager
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.ClassDetailsPagerAdapter
-import net.blakelee.homework.models.ClassDetails
-import net.blakelee.homework.models.Day
-import net.blakelee.homework.models.Week
 import net.blakelee.homework.views.ClassDetailsUI
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView
 
 class ClassDetailsActivity : FragmentActivity() {
 
+    private var classId : Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Dummy data
-        val classDetails = ClassDetails("Psychology 101", mutableListOf(Week(), Week()), "", "", "test@gmail.com", "(555) 123-4567", null, "", "Mrs. Puff", Day())
+        val bundle = intent.extras
+        classId = bundle?.getInt("class_id")
 
         ClassDetailsUI().setContentView(this)
 
         val tabLayout = find<TabLayout>(R.id.tab_layout)
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"))
+        tabLayout.addTab(tabLayout.newTab().setText("Class Details"))
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
         val pager = find<ViewPager>(R.id.class_pager)
-        val pagerAdapter = ClassDetailsPagerAdapter(supportFragmentManager, 1, classDetails)
+        val pagerAdapter = ClassDetailsPagerAdapter(supportFragmentManager, 1, classId!!)
 
         pager.adapter = pagerAdapter
         pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
