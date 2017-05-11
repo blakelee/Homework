@@ -27,7 +27,7 @@ import net.blakelee.homework.views.EditClassUI
 import org.jetbrains.anko.*
 import java.util.*
 
-class EditClassActivity(val className : String? = null) : AppCompatActivity(), EditClassInterface {
+class EditClassActivity : AppCompatActivity(), EditClassInterface {
 
     private val PICTURE_RESULT = 100
     private val imgView by lazy { find<ImageView>(R.id.edit_class_image) }
@@ -37,9 +37,9 @@ class EditClassActivity(val className : String? = null) : AppCompatActivity(), E
     private var validName : Boolean = true
     private lateinit var classDetails : ClassDetails
     private lateinit var presenter : EditClassPresenter
-
+    private var classId : Int? = null
     override fun onFinishEditDialog(daysSelected: List<Int>, position: Int) {
-        classDetails.week[position].day = daysSelected
+        classDetails.weeks.week[position].day = daysSelected
         recycler.adapter.notifyItemChanged(position)
     }
 
@@ -60,7 +60,10 @@ class EditClassActivity(val className : String? = null) : AppCompatActivity(), E
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        presenter = EditClassPresenter(className, this)
+        val bundle = intent.extras
+        classId = bundle?.getInt("class_id")
+
+        presenter = EditClassPresenter(classId, this)
 
         EditClassUI(classDetails).setContentView(this)
 
@@ -72,13 +75,11 @@ class EditClassActivity(val className : String? = null) : AppCompatActivity(), E
         supportActionBar?.setHomeAsUpIndicator(arrow)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if (className == null)
-            supportActionBar?.setTitle(R.string.new_class)
-        else
-            supportActionBar?.setTitle(R.string.edit_class)
+        supportActionBar?.setTitle(R.string.edit_class)
+        classId?.let{ supportActionBar?.setTitle(R.string.new_class) }
 
         recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = EditClassDayAdapter(classDetails.week, this, recycler)
+        recycler.adapter = EditClassDayAdapter(classDetails.weeks.week, this, recycler)
         phoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
     }
 
@@ -110,16 +111,17 @@ class EditClassActivity(val className : String? = null) : AppCompatActivity(), E
     override fun validate(validName : Boolean) : Boolean {
         this.validName = validName
 
-        if (!validName)
-            nameText.error = "Class name is the same as an existing class name"
+        //TODO: Fix it so it checks to see if there is a duplicate name
+        //if (!validName)
+         //   nameText.error = "Class name is the same as an existing class name"
 
-        else if (classDetails.name.isNotEmpty()) {
-            for(item : Week in classDetails.week) {
+        /*else */if (classDetails.name.isNotEmpty()) {
+            for(item : Week in classDetails.weeks.week) {
                 val week = item.day
 
                 if (week.isEmpty()) {
                     alert("You can't have no class days selected") { okButton{} }.show()
-                    break
+                    return false
                 }
             }
             return true
@@ -157,5 +159,10 @@ class EditClassActivity(val className : String? = null) : AppCompatActivity(), E
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
     }
 }
