@@ -1,59 +1,66 @@
 package net.blakelee.homework.databases
 
 import com.raizlabs.android.dbflow.kotlinextensions.from
-import com.raizlabs.android.dbflow.kotlinextensions.save
-import com.raizlabs.android.dbflow.kotlinextensions.update
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import net.blakelee.homework.interfaces.ClassDetailsRepositoryInterface
-import net.blakelee.homework.models.ClassDetails
-import net.blakelee.homework.models.ClassDetailsJSON
-import net.blakelee.homework.models.ClassDetailsJSON_Table
-import net.blakelee.homework.models.Week
-import net.blakelee.homework.presenters.EditClassPresenter
+import net.blakelee.homework.models.*
 
-class ClassDetailsRepository(val editClassPresenter: EditClassPresenter) : ClassDetailsRepositoryInterface {
 
-    val json = ClassDetailsJSON()
+class ClassDetailsRepository : ClassDetailsRepositoryInterface {
+
+    val classesRepository = ClassesRepository()
 
     //Need to make sure adding a class doesn't conflict with an already existing class
-    override fun addClass(classDetails: ClassDetails) {
-        json.setClassDetailsFromClass(classDetails)
-        json.name = classDetails.name
+    override fun addClass(classDetails: ClassDetails) : Boolean {
 
         val cd = SQLite.select()
-                .from(ClassDetailsJSON::class)
-                .where(ClassDetailsJSON_Table.name.eq(classDetails.name))
+                .from(ClassDetails::class)
+                .where(ClassDetails_Table.name.eq(classDetails.name))
                 .querySingle()
 
-
+        var ret = false
         if (cd == null) { //Success
-            json.save()
-            editClassPresenter.onAddClassSuccess()
+            ret = classDetails.save()
+            with(classDetails) {
+                classesRepository.addClass(Classes(id, name, weeks, icon))
+            }
         }
-        else
-            editClassPresenter.onAddClassFailure()
+        return ret
     }
 
-    override fun changeClass(classDetails: ClassDetails) {
-        json.setClassDetailsFromClass(classDetails)
-        json.name = classDetails.name
-        json.update()
-        editClassPresenter.onChangeClassSuccess()
+    override fun changeClass(classDetails: ClassDetails) : Boolean {
+
+        val ret = classDetails.update()
+        val classes = classesRepository.getClass(classDetails.id)!!
+        classes.name = classDetails.name
+        classes.weeks = classDetails.weeks
+        classes.icon = classDetails.icon
+        classesRepository.changeClass(classes)
+        return ret
     }
 
-    override fun getClass(className: String) {
-        val cd = SQLite.select()
-                .from(ClassDetailsJSON::class)
-                .where(ClassDetailsJSON_Table.name.eq(className))
-                .querySingle()
+    override fun getClass(classId : Int?) : ClassDetails {
+        var cd : ClassDetails? = null
+
+        if (classId != null) {
+            cd = SQLite.select()
+                    .from(ClassDetails::class)
+                    .where(ClassDetails_Table.id.eq(classId))
+                    .querySingle()
+        }
 
         if (cd == null)
-            editClassPresenter.onGetClassFailure(ClassDetails())
+            return ClassDetails(0)
         else
-            editClassPresenter.onGetClassSuccess(cd.getClassDetailsFromString()!!)
+            return cd
     }
 
-    override fun getWeek(className: String) : MutableList<Week> {
-        return mutableListOf(Week())
+    override fun deleteClass(classId: Int): Boolean {
+        val cd : ClassDetails = getClass(classId)
+        val c : Classes? = ClassesRepository().getClass(classId)
+
+        cd.delete()
+        c?.delete()
+        return true
     }
 }
