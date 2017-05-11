@@ -1,42 +1,45 @@
 package net.blakelee.homework.views.items
 
+import android.view.View
 import android.view.ViewGroup
+import net.blakelee.homework.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.percent.percentRelativeLayout
 
-class EditWeekItemUI : org.jetbrains.anko.AnkoComponent<ViewGroup> {
-    override fun createView(ui: org.jetbrains.anko.AnkoContext<ViewGroup>): android.view.View {
+class EditWeekItemUI : AnkoComponent<ViewGroup> {
+    override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
             percentRelativeLayout {
-                lparams(width = org.jetbrains.anko.matchParent, height = org.jetbrains.anko.wrapContent)
+                lparams(width = matchParent, height = wrapContent)
+
                 button {
-                    id = net.blakelee.homework.R.id.day_picker
+                    id = R.id.day_picker
                     setAllCaps(false)
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.4f
                 }
 
                 button {
-                    id = net.blakelee.homework.R.id.day_start
+                    id = R.id.day_start
                     setAllCaps(false)
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.25f
-                    rightOf(net.blakelee.homework.R.id.day_picker)
+                    rightOf(R.id.day_picker)
                 }
 
                 button {
-                    id = net.blakelee.homework.R.id.day_end
+                    id = R.id.day_end
                     setAllCaps(false)
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.25f
-                    rightOf(net.blakelee.homework.R.id.day_start)
+                    rightOf(R.id.day_start)
                 }
 
                 button("+") {
-                    id = net.blakelee.homework.R.id.addremove_day
+                    id = R.id.addremove_day
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.1f
-                    rightOf(net.blakelee.homework.R.id.day_end)
+                    rightOf(R.id.day_end)
                 }
             }
         }
