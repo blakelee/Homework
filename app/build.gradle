@@ -62,6 +62,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile 'com.github.salomonbrys.kotson:kotson:2.5.0'
+
+    compile 'com.facebook.stetho:stetho:1.5.0'
 }
 
 kapt {
