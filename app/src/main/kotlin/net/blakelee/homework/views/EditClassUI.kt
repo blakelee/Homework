@@ -49,11 +49,8 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                         }
                     }.lparams(width = matchParent, height = dip(200))
 
-                    /** TODO: Need to add onTextChanged listener for every editText to set the model Because I don't know how to do data binding
-                     */
-
                     verticalLayout {
-                        textView("Class Name")
+                        textView("Class Name *") { textSize = 12f }
                         editText {
                             id = R.id.class_name
                             setText(classDetails.name)
@@ -62,12 +59,12 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                             override fun afterTextChanged(s: Editable?) { classDetails.name = s.toString() }
                             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
 
-                        textView("Class Days")
+                        textView("Class Days *") { textSize = 12f }
                         recyclerView {
                             id = R.id.days_recycler
                         }.lparams(height = wrapContent, width = matchParent)
 
-                        textView("Professor Name")
+                        textView("Professor Name") { textSize = 12f }
                         editText {
                             id = R.id.professor_name
                             setText(classDetails.professor)
@@ -76,7 +73,7 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                             override fun afterTextChanged(s: Editable?) { classDetails.professor = s.toString() } //Update model for everything
                             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
 
-                        textView("Location")
+                        textView("Location") { textSize = 12f }
                         editText {
                             id = R.id.location
                             setText(classDetails.location)
@@ -85,7 +82,7 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                             override fun afterTextChanged(s: Editable?) { classDetails.location = s.toString() } //Update model for everything
                             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
 
-                        textView("Email Address")
+                        textView("Email Address") { textSize = 12f }
                         editText {
                             id = R.id.email_address
                             setText(classDetails.email)
@@ -94,7 +91,7 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                             override fun afterTextChanged(s: Editable?) { classDetails.email = s.toString() } //Update model for everything
                             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
 
-                        textView("Phone Number")
+                        textView("Phone Number") { textSize = 12f }
                         editText {
                             id = R.id.phone_number
                             inputType = android.text.InputType.TYPE_CLASS_PHONE
@@ -104,7 +101,7 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                             override fun afterTextChanged(s: Editable?) { classDetails.phone = s.toString() } //Update model for everything
                             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
 
-                        textView("Credit Hours")
+                        textView("Credit Hours") { textSize = 12f }
                         editText {
                             id = R.id.credit_hours
                             setText(classDetails.hours?.toString())
@@ -119,7 +116,7 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                             }
                             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
 
-                        textView("Final")
+                        textView("Final") { textSize = 12f }
                         linearLayout {
                             button {
                                 setAllCaps(false)
@@ -137,6 +134,15 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                                 text = classDetails.finals.getEndTime()
                             }.lparams(weight = 0.25f)
                         }
+
+                        textView("Icon") { textSize = 12f }
+                        //TODO: Get user selectable icon here
+
+                        textView("In class ringer mode") { textSize = 12f }
+                        //TODO: Get enum of ringer mode selected
+
+                        textView("Color") { textSize = 12f }
+                        //TODO: Get color of icon if not user icon
 
                         padding = dip(14)
                     }.lparams(height = matchParent, width = matchParent)
