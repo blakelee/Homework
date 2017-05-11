@@ -32,8 +32,8 @@ class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponen
                     textView (classDetails.name)
 
                     textView("Class Days")
-                    for(week : Week in classDetails.week) {
-                        this.addView(WeekItemUI().createView(AnkoContext.create(ctx, this)))
+                    for(week : Week in classDetails.weeks.week) {
+                        this.addView(WeekItemUI(week).createView(AnkoContext.create(ctx, this)))
                     }
 
                     if (classDetails.professor != "") {
@@ -64,9 +64,8 @@ class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponen
 
                     if (classDetails.hours != null) {
                         textView("Credit Hours")
-                        editText {
+                        textView(classDetails.hours?.toString()) {
                             id = R.id.credit_hours
-                            setText(classDetails.hours?.toString())
                         }
                     }
 
