@@ -14,7 +14,7 @@ import java.util.*
 class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: EditClassInterface, val recycler: RecyclerView) : RecyclerView.Adapter<EditDaysItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditDaysItemViewHolder =
-            EditDaysItemViewHolder(EditWeekItemUI().createView(AnkoContext.create(parent.context, parent)))
+        EditDaysItemViewHolder(EditWeekItemUI().createView(AnkoContext.create(parent.context, parent)))
 
     override fun onBindViewHolder(holder: EditDaysItemViewHolder, position: Int) {
 
