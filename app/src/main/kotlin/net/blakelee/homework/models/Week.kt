@@ -1,13 +1,8 @@
 package net.blakelee.homework.models
 
 import android.text.format.DateUtils
-import com.raizlabs.android.dbflow.annotation.Column
-import com.raizlabs.android.dbflow.annotation.Table
-import net.blakelee.homework.databases.AppDatabase
 
-@Table(database = AppDatabase::class)
 open class Week (
-        @Column
          var day : List<Int> = listOf()
 ) : BaseDay() {
 
