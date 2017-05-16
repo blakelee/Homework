@@ -12,13 +12,13 @@ import org.jetbrains.anko.setContentView
 
 class ClassDetailsActivity : FragmentActivity() {
 
-    private var classId : Int? = null
+    private var classId : Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val bundle = intent.extras
-        classId = bundle?.getInt("class_id")
+        classId = bundle?.getLong("class_id")
 
         ClassDetailsUI().setContentView(this)
 

@@ -8,8 +8,8 @@ import net.blakelee.homework.databases.AppDatabase
 @Table(database = AppDatabase::class, allFields = true)
 class Classes (
 
-        @PrimaryKey
-        var id: Int = 0,
+        @PrimaryKey(autoincrement = true)
+        var id: Long = 0,
         var name: String = "",
         var weeks: Weeks = Weeks(),
         var icon: String = ""

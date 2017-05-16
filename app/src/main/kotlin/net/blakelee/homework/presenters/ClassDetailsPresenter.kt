@@ -1,14 +1,15 @@
 package net.blakelee.homework.presenters
 
-import net.blakelee.homework.databases.ClassDetailsRepository
+import net.blakelee.homework.databases.ClassRepository
 import net.blakelee.homework.fragments.ClassDetailsMainFragment
 import net.blakelee.homework.interfaces.ClassDetailsPresenterInterface
+import org.jetbrains.anko.support.v4.ctx
 
-class ClassDetailsPresenter(private val classId : Int, private var view : ClassDetailsMainFragment?) : ClassDetailsPresenterInterface {
+class ClassDetailsPresenter(private val classId : Long, private var parent : ClassDetailsMainFragment?) : ClassDetailsPresenterInterface {
 
-    override fun loadClassDetails(classId: Int) = ClassDetailsRepository().getClass(classId)
+    override fun loadClassDetails(classId: Long) = ClassRepository(parent!!.ctx).getClass(classId)
 
     override fun onDestroy() {
-        view = null
+        parent = null
     }
 }

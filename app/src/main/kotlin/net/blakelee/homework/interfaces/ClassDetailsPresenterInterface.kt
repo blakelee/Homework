@@ -4,6 +4,6 @@ import net.blakelee.homework.models.ClassDetails
 
 
 interface ClassDetailsPresenterInterface {
-    fun loadClassDetails (classId : Int) : ClassDetails
+    fun loadClassDetails (classId : Long) : ClassDetails?
     fun onDestroy()
 }

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import net.blakelee.homework.fragments.ClassDetailsMainFragment
 import net.blakelee.homework.models.ClassDetails
 
-class ClassDetailsPagerAdapter(fragmentManager: FragmentManager, var numTabs: Int, val classId: Int) : FragmentStatePagerAdapter(fragmentManager){
+class ClassDetailsPagerAdapter(fragmentManager: FragmentManager, var numTabs: Int, val classId: Long) : FragmentStatePagerAdapter(fragmentManager){
 
     override fun getCount(): Int = numTabs
 
