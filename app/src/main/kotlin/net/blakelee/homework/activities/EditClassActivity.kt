@@ -3,6 +3,8 @@ package net.blakelee.homework.activities
 import android.app.Activity
 import android.app.DialogFragment
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.support.v7.app.AppCompatActivity
@@ -15,6 +17,7 @@ import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
+import com.raizlabs.android.dbflow.data.Blob
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.EditClassDayAdapter
 import net.blakelee.homework.fragments.DayPicker
@@ -23,8 +26,11 @@ import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.ClassDetails
 import net.blakelee.homework.models.Week
 import net.blakelee.homework.presenters.EditClassPresenter
+import net.blakelee.homework.utils.BitmapToBlob
+import net.blakelee.homework.utils.BlobToBitmap
 import net.blakelee.homework.views.EditClassUI
 import org.jetbrains.anko.*
+import java.io.File
 import java.util.*
 
 class EditClassActivity : AppCompatActivity(), EditClassInterface {
@@ -37,7 +43,8 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
     private var validName : Boolean = true
     private lateinit var classDetails : ClassDetails
     private lateinit var presenter : EditClassPresenter
-    private var classId : Int? = null
+    private var classId : Long? = null
+
     override fun onFinishEditDialog(daysSelected: List<Int>, position: Int) {
         classDetails.weeks.week[position].day = daysSelected
         recycler.adapter.notifyItemChanged(position)
@@ -61,7 +68,7 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
         super.onCreate(savedInstanceState)
 
         val bundle = intent.extras
-        classId = bundle?.getInt("class_id")
+        classId = bundle?.getLong("class_id")
 
         presenter = EditClassPresenter(classId, this)
 
@@ -72,15 +79,26 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
 
         val arrow : Drawable = resources.getDrawable(R.drawable.abc_ic_ab_back_material)
         arrow.setColorFilter(resources.getColor(R.color.icons), PorterDuff.Mode.SRC_ATOP)
+
         supportActionBar?.setHomeAsUpIndicator(arrow)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        supportActionBar?.setTitle(R.string.edit_class)
-        classId?.let{ supportActionBar?.setTitle(R.string.new_class) }
+        supportActionBar?.setTitle(R.string.new_class)
+        classId?.let{ supportActionBar?.setTitle(R.string.edit_class) }
 
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = EditClassDayAdapter(classDetails.weeks.week, this, recycler)
+
         phoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+
+        val file : File = File(ctx.filesDir, classDetails.id.toString())
+
+        if (file.exists()) {
+            val blob = Blob(file.readBytes())
+            imgView.imageBitmap = BlobToBitmap(blob)
+            imgView.scaleType = ImageView.ScaleType.CENTER_CROP
+            imgView.tag = "IMAGE"
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -108,6 +126,7 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
         }
     }
 
+    //TODO: This needs to get moved to the presenter
     override fun validate(validName : Boolean) : Boolean {
         this.validName = validName
 
@@ -148,6 +167,12 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
                         imgView.setImageURI(selectedImageUri)
                         imgView.scaleType = ImageView.ScaleType.CENTER_CROP
                         imgView.tag = "IMAGE"
+
+                        //Convert selected image to bitmap so that we don't need to use storage permissions
+                        val bitmap : Bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(selectedImageUri))
+                        val file = File(ctx.filesDir, "temp")
+                        val blob = BitmapToBlob(bitmap)
+                        file.writeBytes(blob.blob)
                     }
                 }
 
