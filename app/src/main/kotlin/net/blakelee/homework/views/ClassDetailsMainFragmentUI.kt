@@ -4,9 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v4.app.Fragment
 import android.view.View
+import android.widget.ImageView
+import com.raizlabs.android.dbflow.data.Blob
 import net.blakelee.homework.R
 import net.blakelee.homework.models.ClassDetails
 import net.blakelee.homework.models.Week
+import net.blakelee.homework.utils.BlobToBitmap
 import net.blakelee.homework.views.items.WeekItemUI
 import org.jetbrains.anko.*
 import java.io.File
@@ -15,18 +18,21 @@ class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponen
     override fun createView(ui: AnkoContext<Fragment>): View = with(ui) {
         scrollView {
             lparams(width = matchParent)
+
             verticalLayout {
 
-                if (classDetails.image != "") {
-                    val file = File(classDetails.image)
-                    if (file.exists()) {
-                        imageView {
-                            setImageURI(Uri.fromFile(file))
+                val file = File(ctx.filesDir, classDetails.id.toString())
+                if (file.exists()) {
+                    imageView {
+                        val blob = Blob(file.readBytes())
+                        imageBitmap = BlobToBitmap(blob)
+                        scaleType = ImageView.ScaleType.CENTER_CROP
                         }.lparams(width = matchParent, height = dip(200))
-                    }
                 }
 
                 verticalLayout {
+
+                    padding = dip(14)
 
                     textView("Class Name")
                     textView (classDetails.name)
@@ -69,17 +75,8 @@ class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponen
                         }
                     }
 
-                    if (classDetails.finals.getDay() != "None") {
-                        textView("Final")
-                        linearLayout {
-                            textView(classDetails.finals.getDay()).lparams(weight = 0.5f)
-                            textView(classDetails.finals.getStartTime())}.lparams(weight = 0.25f)
-                            textView(classDetails.finals.getEndTime()).lparams(weight = 0.25f)
-                        }
-                    }
-
-                    padding = dip(14)
-                }.lparams(height = matchParent, width = matchParent)
+                }
+            }.lparams(height = matchParent, width = matchParent)
         }
     }
 }
