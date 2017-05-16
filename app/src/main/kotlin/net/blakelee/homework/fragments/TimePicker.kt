@@ -19,13 +19,13 @@ class TimePicker (var date: Date, val compareTime: (Date) -> Int): DialogFragmen
 
     override fun onTimeSet(timeView: TimePicker?, hour: Int, minute: Int) {
         val cal = Calendar.getInstance()
-        cal.set(Calendar.HOUR_OF_DAY, hour)
-        cal.set(Calendar.MINUTE, minute)
-        cal.set(Calendar.YEAR, 1970)
-        cal.set(Calendar.DAY_OF_YEAR, 1)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MONTH, 0)
-        cal.set(Calendar.MILLISECOND, 0)
+        cal.set(Calendar.HOUR_OF_DAY,   hour)
+        cal.set(Calendar.MINUTE,        minute)
+        cal.set(Calendar.YEAR,          cal.getActualMinimum(Calendar.YEAR))
+        cal.set(Calendar.DAY_OF_YEAR,   cal.getActualMinimum(Calendar.DAY_OF_YEAR))
+        cal.set(Calendar.SECOND,        cal.getActualMinimum(Calendar.SECOND))
+        cal.set(Calendar.MONTH,         cal.getActualMinimum(Calendar.MONTH))
+        cal.set(Calendar.MILLISECOND,   cal.getActualMinimum(Calendar.MILLISECOND))
 
         if (compareTime(cal.time) > 0)
             alert("Start time must be before end time") { okButton{} }.show()
