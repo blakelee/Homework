@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import net.blakelee.homework.R
 import net.blakelee.homework.activities.ClassDetailsActivity
 import net.blakelee.homework.activities.EditClassActivity
-import net.blakelee.homework.databases.ClassDetailsRepository
+import net.blakelee.homework.databases.ClassRepository
 import net.blakelee.homework.models.Classes
 import net.blakelee.homework.views.items.MainItemUI
 import net.blakelee.homework.viewholders.MainItemViewHolder
@@ -34,7 +34,7 @@ class MainActivityAdapter(var classes: MutableList<Classes>, val ctx: Context) :
                 true
             }
             menu?.add(R.string.action_delete)?.setOnMenuItemClickListener {
-                ClassDetailsRepository().deleteClass(id)
+                ClassRepository(ctx).deleteClass(id)
                 classes.removeAt(position)
                 notifyItemRemoved(position)
                 true
