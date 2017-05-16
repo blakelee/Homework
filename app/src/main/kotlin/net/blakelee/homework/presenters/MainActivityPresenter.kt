@@ -1,19 +1,20 @@
 package net.blakelee.homework.presenters
 
 import net.blakelee.homework.activities.MainActivity
-import net.blakelee.homework.databases.ClassesRepository
+import net.blakelee.homework.databases.ClassRepository
 import net.blakelee.homework.interfaces.MainActivityPresenterInterface
 import net.blakelee.homework.models.Classes
+import org.jetbrains.anko.ctx
 
-class MainActivityPresenter (private var view : MainActivity?) : MainActivityPresenterInterface{
+class MainActivityPresenter (private var parent : MainActivity?) : MainActivityPresenterInterface{
 
-    private val classesRepository = ClassesRepository()
+    private val repo = ClassRepository(parent!!.ctx)
 
     override fun loadClasses() : MutableList<Classes> {
-        return classesRepository.getClasses()
+        return repo.getClasses()
     }
     override fun onDestroy() {
-        view = null
+        parent = null
     }
 
 }
