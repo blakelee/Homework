@@ -1,28 +1,32 @@
 package net.blakelee.homework.presenters
 
 import net.blakelee.homework.activities.EditClassActivity
-import net.blakelee.homework.databases.ClassDetailsRepository
+import net.blakelee.homework.databases.ClassRepository
 import net.blakelee.homework.interfaces.EditClassPresenterInterface
 import net.blakelee.homework.models.ClassDetails
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.info
 import org.jetbrains.anko.warn
 
 
-class EditClassPresenter(val classId : Int?, private var parent: EditClassActivity?) : EditClassPresenterInterface, AnkoLogger {
+class EditClassPresenter(val classId : Long?, private var parent: EditClassActivity?) : EditClassPresenterInterface, AnkoLogger {
 
     private var classDetails : ClassDetails? = null
-    private val classDetailsRepository = ClassDetailsRepository()
+    private val classDetailsRepository = ClassRepository(parent!!.ctx)
 
     init {
-            //Gets class on startup
-            classDetails = classDetailsRepository.getClass(classId)
+            if (classId != null)
+                classDetails = classDetailsRepository.getClass(classId)
+            else
+                classDetails = ClassDetails()
+
             parent?.setClassDetails(classDetails!!)
     }
 
     fun save() {
         if (classId == null)
-            classDetailsRepository.addClass(classDetails!!)
+            classDetailsRepository.insertClass(classDetails!!)
         else
             classDetailsRepository.changeClass(classDetails!!)
     }
