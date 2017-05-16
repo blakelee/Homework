@@ -12,6 +12,8 @@ import net.blakelee.homework.models.ClassDetails
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.design.appBarLayout
+import org.jetbrains.anko.design.textInputLayout
+import org.jetbrains.anko.percent.percentRelativeLayout
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
 class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActivity> {
@@ -38,6 +40,7 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                         id = R.id.edit_class_image
                         scaleType = ImageView.ScaleType.CENTER
                         imageResource = R.drawable.image_placeholder
+
                         backgroundColor = ContextCompat.getColor(ctx, R.color.divider)
                         tag = "BACKGROUND"
 
@@ -50,89 +53,92 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                     }.lparams(width = matchParent, height = dip(200))
 
                     verticalLayout {
-                        textView("Class Name *") { textSize = 12f }
-                        editText {
-                            id = R.id.class_name
-                            setText(classDetails.name)
-                        }.addTextChangedListener(object : TextWatcher {
-                            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                            override fun afterTextChanged(s: Editable?) { classDetails.name = s.toString() }
-                            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
+                        textInputLayout {
+                            editText {
+                                id = R.id.class_name
+                                setText(classDetails.name)
+                                hint = "Class Name *"
+                            }.addTextChangedListener(object : TextWatcher {
+                                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                                override fun afterTextChanged(s: Editable?) { classDetails.name = s.toString() }
+                                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
+                        }
 
                         textView("Class Days *") { textSize = 12f }
                         recyclerView {
                             id = R.id.days_recycler
                         }.lparams(height = wrapContent, width = matchParent)
 
-                        textView("Professor Name") { textSize = 12f }
-                        editText {
-                            id = R.id.professor_name
-                            setText(classDetails.professor)
-                        }.addTextChangedListener(object : TextWatcher {
-                            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                            override fun afterTextChanged(s: Editable?) { classDetails.professor = s.toString() } //Update model for everything
-                            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
+                        textInputLayout {
+                            editText {
+                                id = R.id.professor_name
+                                setText(classDetails.professor)
+                                hint = "Professor Name"
+                            }.addTextChangedListener(object : TextWatcher {
+                                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                                override fun afterTextChanged(s: Editable?) { classDetails.professor = s.toString() }
+                                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
+                        }
 
-                        textView("Location") { textSize = 12f }
-                        editText {
-                            id = R.id.location
-                            setText(classDetails.location)
-                        }.addTextChangedListener(object : TextWatcher {
-                            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                            override fun afterTextChanged(s: Editable?) { classDetails.location = s.toString() } //Update model for everything
-                            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
+                        textInputLayout {
+                            editText {
+                                id = R.id.location
+                                setText(classDetails.location)
+                                hint = "Location"
+                            }.addTextChangedListener(object : TextWatcher {
+                                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                                override fun afterTextChanged(s: Editable?) { classDetails.location = s.toString() }
+                                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
+                        }
 
-                        textView("Email Address") { textSize = 12f }
-                        editText {
-                            id = R.id.email_address
-                            setText(classDetails.email)
-                        }.addTextChangedListener(object : TextWatcher {
-                            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                            override fun afterTextChanged(s: Editable?) { classDetails.email = s.toString() } //Update model for everything
-                            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
+                        textInputLayout {
+                            editText {
+                                id = R.id.email_address
+                                setText(classDetails.email)
+                                hint = "Email Address"
+                            }.addTextChangedListener(object : TextWatcher {
+                                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                                override fun afterTextChanged(s: Editable?) { classDetails.email = s.toString() }
+                                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
+                        }
 
-                        textView("Phone Number") { textSize = 12f }
-                        editText {
-                            id = R.id.phone_number
-                            inputType = android.text.InputType.TYPE_CLASS_PHONE
-                            setText(classDetails.phone)
-                        }.addTextChangedListener(object : TextWatcher {
-                            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                            override fun afterTextChanged(s: Editable?) { classDetails.phone = s.toString() } //Update model for everything
-                            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
-
-                        textView("Credit Hours") { textSize = 12f }
-                        editText {
-                            id = R.id.credit_hours
-                            setText(classDetails.hours?.toString())
-                            inputType = android.text.InputType.TYPE_CLASS_NUMBER + android.text.InputType.TYPE_NUMBER_FLAG_SIGNED
-                        }.addTextChangedListener(object : TextWatcher {
-                            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                            override fun afterTextChanged(s: Editable?) {
-                                if (s.toString() == "")
-                                        classDetails.hours = null
-                                else
-                                    classDetails.hours = s.toString().toInt()
+                        percentRelativeLayout {
+                            lparams(width = matchParent, height = wrapContent)
+                            textInputLayout {
+                                id = R.id.phone_number_parent
+                                editText {
+                                    id = R.id.phone_number
+                                    inputType = android.text.InputType.TYPE_CLASS_PHONE
+                                    setText(classDetails.phone)
+                                    hint = "Phone Number"
+                                }.addTextChangedListener(object : TextWatcher {
+                                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                                    override fun afterTextChanged(s: Editable?) { classDetails.phone = s.toString() }
+                                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
+                            }.lparams {
+                                percentLayoutInfo.widthPercent = 0.6f
                             }
-                            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {} })
 
-                        textView("Final") { textSize = 12f }
-                        linearLayout {
-                            button {
-                                setAllCaps(false)
-                                id = R.id.final_day
-                                text = classDetails.finals.getDay()
-                            }.lparams(weight = 0.5f)
-
-                            button {
-                                id = R.id.final_start
-                                text = classDetails.finals.getStartTime()
-                            }.lparams(weight = 0.25f)
-
-                            button {
-                                id = R.id.final_end
-                                text = classDetails.finals.getEndTime()
-                            }.lparams(weight = 0.25f)
+                            textInputLayout {
+                                editText {
+                                    id = R.id.credit_hours
+                                    setText(classDetails.hours?.toString())
+                                    inputType = android.text.InputType.TYPE_CLASS_NUMBER + android.text.InputType.TYPE_NUMBER_FLAG_SIGNED
+                                    hint = "Credit Hours"
+                                }.addTextChangedListener(object : TextWatcher {
+                                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                                    override fun afterTextChanged(s: Editable?) {
+                                        if (s.toString() == "")
+                                            classDetails.hours = null
+                                        else
+                                            classDetails.hours = s.toString().toInt()
+                                    }
+                                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                                })
+                            }.lparams {
+                                rightOf(R.id.phone_number_parent)
+                                percentLayoutInfo.widthPercent = 0.4f
+                            }
                         }
 
                         textView("Icon") { textSize = 12f }
