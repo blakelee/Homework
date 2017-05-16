@@ -15,12 +15,14 @@ class EditWeekItemUI : AnkoComponent<ViewGroup> {
                 button {
                     id = R.id.day_picker
                     setAllCaps(false)
+                    backgroundResource = R.drawable.rounded_left
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.4f
                 }
 
                 button {
                     id = R.id.day_start
+                    backgroundResource = R.drawable.square
                     setAllCaps(false)
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.25f
@@ -30,6 +32,7 @@ class EditWeekItemUI : AnkoComponent<ViewGroup> {
                 button {
                     id = R.id.day_end
                     setAllCaps(false)
+                    backgroundResource = R.drawable.square
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.25f
                     rightOf(R.id.day_start)
@@ -37,6 +40,7 @@ class EditWeekItemUI : AnkoComponent<ViewGroup> {
 
                 button("+") {
                     id = R.id.addremove_day
+                    backgroundResource = R.drawable.rounded_right
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.1f
                     rightOf(R.id.day_end)
