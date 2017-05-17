@@ -28,7 +28,7 @@ class MainActivityAdapter(var classes: MutableList<Classes>, val ctx: Context) :
 
         holder?.view?.setOnCreateContextMenuListener {
             menu: ContextMenu?, _, _ ->
-            menu?.setHeaderTitle("Select action for ${holder.name.text}")
+            menu?.setHeaderTitle("Select action")
             menu?.add(R.string.action_edit)?.setOnMenuItemClickListener {
                 ctx.startActivity<EditClassActivity>("class_id" to id)
                 true
