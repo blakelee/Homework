@@ -7,6 +7,8 @@ import com.raizlabs.android.dbflow.kotlinextensions.from
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import net.blakelee.homework.interfaces.ClassDetailsRepositoryInterface
 import net.blakelee.homework.models.*
+import net.blakelee.homework.utils.counter
+
 import java.io.File
 
 class ClassRepository(val context: Context) : ClassDetailsRepositoryInterface {
@@ -18,6 +20,10 @@ class ClassRepository(val context: Context) : ClassDetailsRepositoryInterface {
         if (cd == null) { //Success
             val classes = Classes(0, classDetails.name, classDetails.weeks, classDetails.icon)
             val id = classes.insert()
+
+            //Don't create the file until it's done making the byte array from the image
+            while(counter.get() > 0) {}
+
             val temp : File = File(context.filesDir, "temp")
 
             //Add image if one exists
@@ -45,6 +51,9 @@ class ClassRepository(val context: Context) : ClassDetailsRepositoryInterface {
             classes?.weeks = classDetails.weeks
             classes?.icon = classDetails.icon
             classes?.update()
+
+            //Don't create the file until it's done making the byte array from the image
+            while(counter.get() > 0) {}
 
             val temp : File = File(context.filesDir, "temp")
 
