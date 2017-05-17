@@ -5,7 +5,10 @@
     <string name="action_calendar">Calendar</string>
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
-    <string name="about_text">This is the about screen giving details about stuff</string>
+
+    <string name="about_text">This is the about screen giving details about stuff\n\n
+        Icons from Icons8.com</string>
+
     <string name="sample_class_name">"Sample Class Name"</string>
     <string name="sample_class_time">"MTWThF 8:00a - 3:00p"</string>
     <string name="cancel">Cancel</string>
