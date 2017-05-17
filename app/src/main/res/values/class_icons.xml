@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="icons">
+        <item>@drawable/book_96</item>
+        <item>@drawable/globe_96</item>
+        <item>@drawable/math_96</item>
+        <item>@drawable/microscope_96</item>
+        <item>@drawable/moneybag_96</item>
+        <item>@drawable/monitor_96</item>
+        <item>@drawable/music_96</item>
+        <item>@drawable/paintpalette_96</item>
+        <item>@drawable/pencil_96</item>
+        <item>@drawable/physics_104</item>
+        <item>@drawable/psychology_96</item>
+        <item>@drawable/restaurant_96</item>
+        <item>@drawable/soccerball_96</item>
+        <item>@drawable/testtube_96</item>
+        <item>@drawable/yinyang_96</item>
+    </array>
+</resources>
