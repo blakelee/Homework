@@ -3,8 +3,12 @@ package net.blakelee.homework
 import android.app.Application
 import com.facebook.stetho.Stetho
 import com.raizlabs.android.dbflow.config.FlowManager
+import java.util.concurrent.atomic.AtomicInteger
 
-class MyApplication : Application() {
+class App : Application() {
+
+    var counter = AtomicInteger()
+
     override fun onCreate() {
         super.onCreate()
         Stetho.initializeWithDefaults(this)
