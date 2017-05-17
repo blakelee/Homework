@@ -1,6 +1,7 @@
 package net.blakelee.homework.databases
 
 import android.content.Context
+import com.raizlabs.android.dbflow.kotlinextensions.and
 import com.raizlabs.android.dbflow.kotlinextensions.eq
 import com.raizlabs.android.dbflow.kotlinextensions.from
 import com.raizlabs.android.dbflow.sql.language.SQLite
@@ -12,7 +13,7 @@ class ClassRepository(val context: Context) : ClassDetailsRepositoryInterface {
 
     override fun insertClass(classDetails: ClassDetails) : Boolean {
 
-        val cd = querySingle(classDetails.name) //Make sure there aren't conflicting names
+        val cd = querySingle(classDetails.name, -1) //Make sure there aren't conflicting names
 
         if (cd == null) { //Success
             val classes = Classes(0, classDetails.name, classDetails.weeks, classDetails.icon)
@@ -34,16 +35,26 @@ class ClassRepository(val context: Context) : ClassDetailsRepositoryInterface {
     }
 
     override fun changeClass(classDetails: ClassDetails) : Boolean {
-
-        val cd = querySingle(classDetails.name) //Make sure there aren't conflicting names
+        val id = classDetails.id
+        val cd = querySingle(classDetails.name, id) //Make sure there aren't conflicting names
 
         if (cd == null) {
             classDetails.update()
-            val classes = getClasses(classDetails.id)
+            val classes = getClasses(id)
             classes?.name = classDetails.name
             classes?.weeks = classDetails.weeks
             classes?.icon = classDetails.icon
             classes?.update()
+
+            val temp : File = File(context.filesDir, "temp")
+
+            //Change image if one exists
+            if (temp.exists()) {
+                val file = File(context.filesDir, id.toString())
+                file.delete()
+                temp.renameTo(file)
+            }
+
             return true
         }
         return false
@@ -82,8 +93,8 @@ class ClassRepository(val context: Context) : ClassDetailsRepositoryInterface {
         file.delete()
     }
 
-    fun querySingle(name : String) = SQLite.select()
+    fun querySingle(name : String, id : Long) = SQLite.select()
             .from(Classes::class)
-            .where(Classes_Table.name eq name)
+            .where(Classes_Table.name eq name and Classes_Table.id.notEq(id))
             .querySingle()
 }
