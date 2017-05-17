@@ -12,6 +12,7 @@ import net.blakelee.homework.models.Week
 import net.blakelee.homework.utils.BlobToBitmap
 import net.blakelee.homework.views.items.WeekItemUI
 import org.jetbrains.anko.*
+import org.jetbrains.anko.percent.percentRelativeLayout
 import java.io.File
 
 class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponent<Fragment> {
@@ -23,11 +24,16 @@ class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponen
 
                 val file = File(ctx.filesDir, classDetails.id.toString())
                 if (file.exists()) {
-                    imageView {
-                        val blob = Blob(file.readBytes())
-                        imageBitmap = BlobToBitmap(blob)
-                        scaleType = ImageView.ScaleType.CENTER_CROP
-                        }.lparams(width = matchParent, height = dip(200))
+                    percentRelativeLayout {
+                        imageView {
+                            val blob = Blob(file.readBytes())
+                            imageBitmap = BlobToBitmap(blob)
+                            scaleType = ImageView.ScaleType.CENTER_CROP
+                        }.lparams(width = matchParent, height = 0) {
+                            percentLayoutInfo.aspectRatio = 1.78f
+                            percentLayoutInfo.widthPercent = 1f
+                        }
+                    }
                 }
 
                 verticalLayout {
