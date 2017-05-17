@@ -18,6 +18,9 @@ import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
 import com.raizlabs.android.dbflow.data.Blob
+import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.launch
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.EditClassDayAdapter
 import net.blakelee.homework.fragments.DayPicker
@@ -109,6 +112,11 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
             android.R.id.home -> {
+                val file = File(ctx.filesDir, "temp")
+
+                if (file.exists())
+                    file.delete()
+
                 NavUtils.navigateUpFromSameTask(this)
                 return true
             }
@@ -159,29 +167,44 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        when(requestCode) {
-            PICTURE_RESULT -> when (resultCode) {
-                Activity.RESULT_OK -> {
-                    val selectedImageUri = data?.data
-                    if (null != selectedImageUri) {
-                        imgView.setImageURI(selectedImageUri)
-                        imgView.scaleType = ImageView.ScaleType.CENTER_CROP
-                        imgView.tag = "IMAGE"
+        when(resultCode) {
+            Activity.RESULT_OK -> {
+                when (requestCode) {
+                    PICTURE_RESULT -> {
+                        val image = data?.data
+                        image?.let {
+                            CropImage.activity(image)
+                                    .setAspectRatio(16, 9)
+                                    .setAllowRotation(true)
+                                    .start(this)
+                        }
+                    }
 
-                        //Convert selected image to bitmap so that we don't need to use storage permissions
-                        val bitmap : Bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(selectedImageUri))
-                        val file = File(ctx.filesDir, "temp")
-                        val blob = BitmapToBlob(bitmap)
-                        file.writeBytes(blob.blob)
+                    CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                        val image = CropImage.getActivityResult(data).uri
+                        image?.let {
+                            imgView.setImageURI(image)
+                            imgView.scaleType = ImageView.ScaleType.CENTER_CROP
+                            imgView.tag = "IMAGE"
+
+                            //TODO: This is a dangerous call. If you try to save while this is running then there won't be an image
+                            launch(CommonPool) {
+                                //Convert selected image to bitmap so that we don't need to use storage permissions
+                                val bitmap: Bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(image))
+                                val file = File(ctx.filesDir, "temp")
+                                val blob = BitmapToBlob(bitmap)
+                                file.writeBytes(blob.blob)
+                            }
+                        }
                     }
                 }
+            }
 
-                Activity.RESULT_CANCELED -> {
-                    if (imgView.tag == "BACKGROUND")
+            Activity.RESULT_CANCELED -> {
+                imgView.scaleType = ImageView.ScaleType.CENTER_CROP
+                if (imgView.tag == "BACKGROUND")
                         imgView.scaleType = ImageView.ScaleType.CENTER
-                    else
-                        imgView.scaleType = ImageView.ScaleType.CENTER_CROP
-                }
+
             }
         }
     }
