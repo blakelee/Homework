@@ -21,6 +21,7 @@ import com.raizlabs.android.dbflow.data.Blob
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.sync.Mutex
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.EditClassDayAdapter
 import net.blakelee.homework.fragments.DayPicker
@@ -31,6 +32,7 @@ import net.blakelee.homework.models.Week
 import net.blakelee.homework.presenters.EditClassPresenter
 import net.blakelee.homework.utils.BitmapToBlob
 import net.blakelee.homework.utils.BlobToBitmap
+import net.blakelee.homework.utils.counter
 import net.blakelee.homework.views.EditClassUI
 import org.jetbrains.anko.*
 import java.io.File
@@ -187,13 +189,21 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
                             imgView.scaleType = ImageView.ScaleType.CENTER_CROP
                             imgView.tag = "IMAGE"
 
-                            //TODO: This is a dangerous call. If you try to save while this is running then there won't be an image
+                            val mutex = Mutex()
                             launch(CommonPool) {
-                                //Convert selected image to bitmap so that we don't need to use storage permissions
-                                val bitmap: Bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(image))
-                                val file = File(ctx.filesDir, "temp")
-                                val blob = BitmapToBlob(bitmap)
-                                file.writeBytes(blob.blob)
+                                mutex.lock()
+                                try {
+                                    counter.increment()
+                                    //Convert selected image to bitmap so that we don't need to use storage permissions
+                                    val bitmap: Bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(image))
+                                    val file = File(ctx.filesDir, "temp")
+                                    val blob = BitmapToBlob(bitmap)
+                                    file.writeBytes(blob.blob)
+                                    counter.decrement()
+                                }
+                                finally {
+                                    mutex.unlock()
+                                }
                             }
                         }
                     }
