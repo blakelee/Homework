@@ -10,6 +10,13 @@
         <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
     </style>
 
+    <style name="CropTheme" parent="Theme.AppCompat">
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
     <style name="OverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
         <!-- Required for pre-Lollipop. -->
         <item name="overlapAnchor">false</item>
