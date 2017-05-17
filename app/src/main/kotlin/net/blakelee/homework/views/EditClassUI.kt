@@ -34,23 +34,28 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
             scrollView {
                 lparams(width = matchParent, height = matchParent)
 
-
                 verticalLayout {
-                    imageView {
-                        id = R.id.edit_class_image
-                        scaleType = ImageView.ScaleType.CENTER
-                        imageResource = R.drawable.image_placeholder
 
-                        backgroundColor = ContextCompat.getColor(ctx, R.color.divider)
-                        tag = "BACKGROUND"
+                    percentRelativeLayout {
+                        imageView {
+                            id = R.id.edit_class_image
+                            scaleType = ImageView.ScaleType.CENTER
+                            imageResource = R.drawable.image_placeholder
 
-                        setOnClickListener {
-                            val intent = Intent()
-                            intent.type = "image/*"
-                            intent.action = Intent.ACTION_GET_CONTENT
-                            ui.owner.startActivityForResult(intent, PICTURE_RESULT)
+                            backgroundColor = ContextCompat.getColor(ctx, R.color.divider)
+                            tag = "BACKGROUND"
+
+                            setOnClickListener {
+                                val intent = Intent()
+                                intent.type = "image/*"
+                                intent.action = Intent.ACTION_GET_CONTENT
+                                ui.owner.startActivityForResult(intent, PICTURE_RESULT)
+                            }
+                        }.lparams(width = matchParent, height = 0) {
+                            percentLayoutInfo.aspectRatio = 16/9f
+                            percentLayoutInfo.widthPercent = 1f
                         }
-                    }.lparams(width = matchParent, height = dip(200))
+                    }
 
                     verticalLayout {
                         textInputLayout {
@@ -141,8 +146,9 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                             }
                         }
 
-                        textView("Icon") { textSize = 12f }
-                        //TODO: Get user selectable icon here
+                        textView("Icon") { textSize = 12f }.setOnClickListener {
+
+                        }
 
                         textView("In class ringer mode") { textSize = 12f }
                         //TODO: Get enum of ringer mode selected
