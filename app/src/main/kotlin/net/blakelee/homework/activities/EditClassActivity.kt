@@ -60,7 +60,7 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
         dp.show(fragmentManager, "DAY_PICKER")
     }
 
-    override fun openTimePicker(date: Date, compareTime: (Date) -> Int) {
+    override fun openTimePicker(date: Date, compareTime: (Date) -> Unit) {
         val tp : DialogFragment = TimePicker(date, compareTime)
         tp.show(fragmentManager, "TIME_PICKER")
     }
@@ -162,6 +162,10 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
         return false
     }
 
+    override fun timeOverlap() {
+            alert("Start time must be before end time") { okButton{} }.show()
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
     }
@@ -193,13 +197,13 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
                             launch(CommonPool) {
                                 mutex.lock()
                                 try {
-                                    counter.increment()
+                                    counter.incrementAndGet()
                                     //Convert selected image to bitmap so that we don't need to use storage permissions
                                     val bitmap: Bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(image))
                                     val file = File(ctx.filesDir, "temp")
                                     val blob = BitmapToBlob(bitmap)
                                     file.writeBytes(blob.blob)
-                                    counter.decrement()
+                                    counter.decrementAndGet()
                                 }
                                 finally {
                                     mutex.unlock()

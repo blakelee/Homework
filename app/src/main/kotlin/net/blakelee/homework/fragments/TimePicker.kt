@@ -6,12 +6,10 @@ import android.app.DialogFragment
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.widget.TimePicker
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.ctx
-import org.jetbrains.anko.okButton
 import java.util.*
 
-class TimePicker (var date: Date, val compareTime: (Date) -> Int): DialogFragment(), TimePickerDialog.OnTimeSetListener {
+class TimePicker (var date: Date, val compareTime: (Date) -> Unit): DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return TimePickerDialog(ctx, this, date.hours, date.minutes, false)
@@ -27,7 +25,6 @@ class TimePicker (var date: Date, val compareTime: (Date) -> Int): DialogFragmen
         cal.set(Calendar.MONTH,         cal.getActualMinimum(Calendar.MONTH))
         cal.set(Calendar.MILLISECOND,   cal.getActualMinimum(Calendar.MILLISECOND))
 
-        if (compareTime(cal.time) > 0)
-            alert("Start time must be before end time") { okButton{} }.show()
+        compareTime(cal.time)
     }
 }

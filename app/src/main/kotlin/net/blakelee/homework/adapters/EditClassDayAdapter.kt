@@ -33,29 +33,25 @@ class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: E
         var endTime = week[position].endTime
         var startTime = week[position].startTime
 
-        fun compareTime(newTime : Date) : Int {
-            if (which == 1) {
-                if (startTime <= newTime) {
-                    week[position].endTime = newTime
-                    notifyItemChanged(position)
-                    endTime = newTime
-                }
-                return startTime.compareTo(newTime)
+        fun compareTime(newTime : Date) : Unit {
+            if (which == 1 && startTime <= newTime) {
+                week[position].endTime = newTime
+                notifyItemChanged(position)
+                endTime = newTime
             }
-            else {
-                if (newTime <= endTime) {
-                    week[position].startTime = newTime
-                    notifyItemChanged(position)
-                    startTime = newTime
-                }
-                return newTime.compareTo(endTime)
+            else if (which == 0 && newTime <= endTime) {
+                week[position].startTime = newTime
+                notifyItemChanged(position)
+                startTime = newTime
             }
+            else
+                editClassInterface.timeOverlap()
         }
 
         //Open Time Picker
         holder.itemView.day_start.setOnClickListener {
             which = 0
-            editClassInterface.openTimePicker(week[position].startTime, ::compareTime )
+            editClassInterface.openTimePicker(week[position].startTime, ::compareTime)
         }
 
         holder.itemView.day_end.setOnClickListener {
