@@ -2,19 +2,15 @@ package net.blakelee.homework.adapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.view.ContextMenu
 import android.view.ViewGroup
-import net.blakelee.homework.R
 import net.blakelee.homework.activities.ClassDetailsActivity
-import net.blakelee.homework.activities.EditClassActivity
-import net.blakelee.homework.databases.ClassRepository
 import net.blakelee.homework.models.Classes
 import net.blakelee.homework.views.items.MainItemUI
 import net.blakelee.homework.viewholders.MainItemViewHolder
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.startActivity
 
-class MainActivityAdapter(var classes: MutableList<Classes>, val ctx: Context) : RecyclerView.Adapter<MainItemViewHolder>() {
+class MainActivityAdapter(var classes: List<Classes>, val ctx: Context) : RecyclerView.Adapter<MainItemViewHolder>() {
 
     override fun getItemCount(): Int = classes.size
 
@@ -26,7 +22,8 @@ class MainActivityAdapter(var classes: MutableList<Classes>, val ctx: Context) :
             ctx.startActivity<ClassDetailsActivity>("class_id" to id)
         }
 
-        holder?.view?.setOnCreateContextMenuListener {
+        //TODO: Change this to a dialog so that it will be centered
+        /*holder?.view?.setOnCreateContextMenuListener {
             menu: ContextMenu?, _, _ ->
             menu?.setHeaderTitle("Select action")
             menu?.add(R.string.action_edit)?.setOnMenuItemClickListener {
@@ -39,7 +36,7 @@ class MainActivityAdapter(var classes: MutableList<Classes>, val ctx: Context) :
                 notifyItemRemoved(position)
                 true
             }
-        }
+        }*/
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MainItemViewHolder? =

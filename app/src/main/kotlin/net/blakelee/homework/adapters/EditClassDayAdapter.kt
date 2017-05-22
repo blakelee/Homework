@@ -14,7 +14,7 @@ import java.util.*
 class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: EditClassInterface, val recycler: RecyclerView) : RecyclerView.Adapter<EditDaysItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditDaysItemViewHolder =
-        EditDaysItemViewHolder(EditWeekItemUI().createView(AnkoContext.create(parent.context, parent)))
+            EditDaysItemViewHolder(EditWeekItemUI().createView(AnkoContext.create(parent.context, parent)))
 
     override fun onBindViewHolder(holder: EditDaysItemViewHolder, position: Int) {
 
@@ -29,34 +29,23 @@ class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: E
         //Open Day Picker Dialog
         holder.itemView.day_picker.setOnClickListener { editClassInterface.openDaysDialog(week[position].day, position) }
 
-        var which : Int = 0
-        var endTime = week[position].endTime
-        var startTime = week[position].startTime
+        fun setStart(date: Date) {
+            week[position].startTime = date
+            notifyItemChanged(position)
+        }
 
-        fun compareTime(newTime : Date) : Unit {
-            if (which == 1 && startTime <= newTime) {
-                week[position].endTime = newTime
-                notifyItemChanged(position)
-                endTime = newTime
-            }
-            else if (which == 0 && newTime <= endTime) {
-                week[position].startTime = newTime
-                notifyItemChanged(position)
-                startTime = newTime
-            }
-            else
-                editClassInterface.timeOverlap()
+        fun setEnd(date: Date) {
+            week[position].endTime = date
+            notifyItemChanged(position)
         }
 
         //Open Time Picker
         holder.itemView.day_start.setOnClickListener {
-            which = 0
-            editClassInterface.openTimePicker(week[position].startTime, ::compareTime)
+            editClassInterface.openTimePicker(week[position].startTime, ::setStart)
         }
 
         holder.itemView.day_end.setOnClickListener {
-            which = 1
-            editClassInterface.openTimePicker(week[position].endTime, ::compareTime)
+            editClassInterface.openTimePicker(week[position].endTime, ::setEnd)
         }
     }
 

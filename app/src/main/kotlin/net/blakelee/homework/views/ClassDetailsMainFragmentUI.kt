@@ -5,11 +5,10 @@ import android.net.Uri
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.ImageView
-import com.raizlabs.android.dbflow.data.Blob
 import net.blakelee.homework.R
 import net.blakelee.homework.models.ClassDetails
 import net.blakelee.homework.models.Week
-import net.blakelee.homework.utils.BlobToBitmap
+import net.blakelee.homework.utils.ByteArrayToBitmap
 import net.blakelee.homework.views.items.WeekItemUI
 import org.jetbrains.anko.*
 import org.jetbrains.anko.percent.percentRelativeLayout
@@ -22,12 +21,12 @@ class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponen
 
             verticalLayout {
 
-                val file = File(ctx.filesDir, classDetails.id.toString())
+                val file = File(ctx.filesDir, classDetails.id.toString() + "-image")
                 if (file.exists()) {
                     percentRelativeLayout {
                         imageView {
-                            val blob = Blob(file.readBytes())
-                            imageBitmap = BlobToBitmap(blob)
+                            val blob = file.readBytes()
+                            imageBitmap = ByteArrayToBitmap(blob)
                             scaleType = ImageView.ScaleType.CENTER_CROP
                         }.lparams(width = matchParent, height = 0) {
                             percentLayoutInfo.aspectRatio = 1.78f

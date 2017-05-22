@@ -8,25 +8,25 @@ import android.view.MenuItem
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.MainActivityAdapter
 import net.blakelee.homework.models.Classes
-import net.blakelee.homework.presenters.EditClassPresenter
-import net.blakelee.homework.presenters.MainActivityPresenter
+import net.blakelee.homework.viewmodels.MainActivityViewModel
 import net.blakelee.homework.views.MainUI
 import org.jetbrains.anko.*
 import org.jetbrains.anko.find
 
 class MainActivity : AppCompatActivity(){
 
-    private lateinit var classes : MutableList<Classes>
+    private var classes : List<Classes>? = null
     private lateinit var classAdapter: MainActivityAdapter
-    private lateinit var presenter : MainActivityPresenter
+    private lateinit var viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstantState: Bundle?) {
         super.onCreate(savedInstantState)
 
-        presenter = MainActivityPresenter(this)
-        classes = presenter.loadClasses()
+        viewModel = MainActivityViewModel(application)
 
-        classAdapter = MainActivityAdapter(classes, this)
+        classes = viewModel.getClasses()
+
+        classAdapter = MainActivityAdapter(classes!!, this)
 
         MainUI(classAdapter).setContentView(this)
         setSupportActionBar(find<Toolbar>(R.id.toolbar_main) as Toolbar?)
@@ -45,14 +45,11 @@ class MainActivity : AppCompatActivity(){
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onDestroy() {
-        presenter.onDestroy()
-        super.onDestroy()
-    }
 
     override fun onResume() {
-        classes = presenter.loadClasses()
+        classes = viewModel.getClasses()
         classAdapter.notifyDataSetChanged()
         super.onResume()
     }
+
 }

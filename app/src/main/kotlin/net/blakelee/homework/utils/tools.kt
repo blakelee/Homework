@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import org.jetbrains.anko.AlertBuilder
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.raizlabs.android.dbflow.data.Blob
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
@@ -26,12 +26,29 @@ fun AlertBuilder<DialogInterface>.multiItems(ctx: Context, items: List<CharSeque
     builder.show()
 }
 
-fun BitmapToBlob(bitmap: Bitmap) : Blob {
-    val baos = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
-    return Blob(baos.toByteArray())
+fun BitmapToByteArray(bitmap: Bitmap) : ByteArray {
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+    return byteArrayOutputStream.toByteArray()
 }
 
-fun BlobToBitmap(blob: Blob) : Bitmap {
-    return BitmapFactory.decodeByteArray(blob.blob, 0, blob.blob.size)
+fun ByteArrayToBitmap(byteArray: ByteArray) : Bitmap {
+    return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+}
+
+enum class ClassValidation {
+    SUCCESS, EMPTY, CONFLICT, DAYS, TIME
+}
+
+fun getHour(hour : Int, minute : Int) : Date {
+    val cal = Calendar.getInstance()
+    cal.set(Calendar.HOUR_OF_DAY,   hour)
+    cal.set(Calendar.MINUTE,        minute)
+    cal.set(Calendar.YEAR,          cal.getActualMinimum(Calendar.YEAR))
+    cal.set(Calendar.DAY_OF_YEAR,   cal.getActualMinimum(Calendar.DAY_OF_YEAR))
+    cal.set(Calendar.SECOND,        cal.getActualMinimum(Calendar.SECOND))
+    cal.set(Calendar.MONTH,         cal.getActualMinimum(Calendar.MONTH))
+    cal.set(Calendar.MILLISECOND,   cal.getActualMinimum(Calendar.MILLISECOND))
+
+    return cal.time
 }

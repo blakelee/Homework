@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 25
@@ -12,11 +13,6 @@ android {
         versionCode 1
         versionName "1.0"
     }
-
-    kapt {
-        generateStubs = true
-    }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -24,23 +20,27 @@ android {
                     'proguard-rules.pro'
         }
     }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+    }
+    productFlavors {
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
     }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-
     // For appcompat-v7 bindings
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:percent:25.3.1'
     //kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.15"
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.15'
     //anko
     compile "org.jetbrains.anko:anko-sdk25:$anko_version"
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
@@ -49,24 +49,19 @@ dependencies {
     compile "org.jetbrains.anko:anko-design:$anko_version"
     compile "org.jetbrains.anko:anko-support-v4:$anko_version"
     compile "org.jetbrains.anko:anko-percent:$anko_version"
-
     //caldroid
     compile 'com.roomorama:caldroid:3.0.1'
-    //DBFlow
-    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:$dbflow_version"
-
-    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:$dbflow_version"
-    compile "com.github.Raizlabs.DBFlow:dbflow-core:$dbflow_version"
-    compile "com.github.Raizlabs.DBFlow:dbflow:$dbflow_version"
-
-    // kotlin extensions
-    compile "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:$dbflow_version"
-
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile 'com.github.salomonbrys.kotson:kotson:2.5.0'
-
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.4.4'
+    //Room Persistence Library, Lifecycles, LiveData, and ViewModel
+    compile "android.arch.persistence.room:runtime:$architecture_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$architecture_version"
+    kapt "android.arch.persistence.room:compiler:$architecture_version"
+    compile "android.arch.lifecycle:runtime:$architecture_version"
+    compile "android.arch.lifecycle:extensions:$architecture_version"
+    kapt "android.arch.lifecycle:compiler:$architecture_version"
 }
 
 repositories {

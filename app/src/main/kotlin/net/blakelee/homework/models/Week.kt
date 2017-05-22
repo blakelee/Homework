@@ -2,11 +2,11 @@ package net.blakelee.homework.models
 
 import android.text.format.DateUtils
 
-open class Week (
+data class Week (
          var day : List<Int> = listOf()
 ) : BaseDay() {
 
-    fun getDay() : String {
+    fun getDayAsString() : String {
         val text = StringBuilder()
 
         day.let {

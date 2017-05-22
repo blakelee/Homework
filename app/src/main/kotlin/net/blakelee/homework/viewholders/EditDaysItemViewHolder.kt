@@ -15,9 +15,9 @@ class EditDaysItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val add_remove = view.find<Button>(R.id.addremove_day)
 
     fun bind(week: Week, position: Int) {
-        day_picker.text = week.getDay()
-        day_start.text = week.getStartTime()
-        day_end.text = week.getEndTime()
+        day_picker.text = week.getDayAsString()
+        day_start.text = week.getStartTimeAsString()
+        day_end.text = week.getEndTimeAsString()
 
         if (position > 0)
             add_remove.text = "-"

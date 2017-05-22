@@ -3,14 +3,14 @@ package net.blakelee.homework.models
 import java.text.DateFormat
 import java.util.*
 
-open class Day (
+data class Day (
        var day : Date? = null
 ) : BaseDay() {
 
     fun  getDay(): String {
         day?.let {
             val fixedDay : Date = day!!.clone() as Date
-            fixedDay!!.year = fixedDay.year - 1900
+            fixedDay.year = fixedDay.year - 1900
             return DateFormat.getDateInstance(DateFormat.LONG).format(fixedDay)
         }
 

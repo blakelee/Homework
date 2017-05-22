@@ -1,23 +1,25 @@
 package net.blakelee.homework.models
 
+import android.arch.persistence.room.Ignore
+import net.blakelee.homework.utils.getHour
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 open class BaseDay {
 
-    @Transient
+    @Ignore
     var dateFormat : DateFormat = SimpleDateFormat("h:mma", Locale.getDefault())
 
-    var startTime : Date = dateFormat.parse("8:00AM")
-    var endTime : Date = dateFormat.parse("10:00AM")
+    var startTime : Date = getHour(8, 0)
+    var endTime : Date = getHour(10,0)
 
-    fun getStartTime() : String = dateFormat.format(startTime)
+    fun getStartTimeAsString() : String = dateFormat.format(startTime)
     fun setStartTime(time : String) {
         startTime = dateFormat.parse(time)
     }
 
-    fun getEndTime() : String = dateFormat.format(endTime)
+    fun getEndTimeAsString() : String = dateFormat.format(endTime)
     fun setEndTime(time : String) {
         endTime = dateFormat.parse(time)
     }

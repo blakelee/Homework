@@ -13,14 +13,14 @@ class WeekItemUI(val week : Week) : AnkoComponent<ViewGroup> {
             percentRelativeLayout {
                 lparams(width = matchParent, height = wrapContent)
 
-                textView(week.getDay()) {
+                textView(week.getDayAsString()) {
                     id = R.id.day_picker
                     setAllCaps(false)
                 }.lparams {
                     percentLayoutInfo.widthPercent = 0.5f
                 }
 
-                textView(week.getStartTime()) {
+                textView(week.getStartTimeAsString()) {
                     id = R.id.day_start
                     setAllCaps(false)
                 }.lparams {
@@ -28,7 +28,7 @@ class WeekItemUI(val week : Week) : AnkoComponent<ViewGroup> {
                     rightOf(R.id.day_picker)
                 }
 
-                textView(week.getEndTime()) {
+                textView(week.getEndTimeAsString()) {
                     id = R.id.day_end
                     setAllCaps(false)
                 }.lparams {
