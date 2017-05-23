@@ -9,7 +9,7 @@ import android.view.View
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import net.blakelee.homework.R
-import net.blakelee.homework.adapters.MainActivityAdapter
+import net.blakelee.homework.adapters.ClassesAdapter
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.floatingActionButton
@@ -21,7 +21,7 @@ import android.support.design.widget.AppBarLayout
 import android.support.v7.widget.DividerItemDecoration
 import net.blakelee.homework.activities.EditClassActivity
 
-class MainUI(val listAdapter: MainActivityAdapter) : AnkoComponent<Activity> {
+class MainUI(val listAdapter: ClassesAdapter) : AnkoComponent<Activity> {
 
     override fun createView(ui: AnkoContext<Activity>): View {
         return with(ui) {
