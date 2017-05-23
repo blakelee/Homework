@@ -14,7 +14,7 @@ import org.jetbrains.anko.AnkoLogger
 import java.io.File
 
 class EditClassViewModel(application: Application) : AndroidViewModel(application), AnkoLogger {
-    private var db : AppDatabase = AppDatabase.getPersistentDatabase(application)
+    private var db : AppDatabase = AppDatabase.createPersistentDatabase(application)
 
     fun insertClass(cd : ClassDetails) {
         val id = db.classModel().insertClass(cd)
@@ -24,7 +24,7 @@ class EditClassViewModel(application: Application) : AndroidViewModel(applicatio
         db.classModel().updateClass(cd)
         setImage(cd.id.toString())
     }
-    fun getClass(id : Long) = db.classModel().getClassesById(id)
+    fun getClass(id : Long) = db.classModel().getClassById(id)
 
     fun validate(cd : ClassDetails) : ClassValidation {
 

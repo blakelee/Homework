@@ -8,7 +8,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        AppDatabase.getPersistentDatabase(this)
+        AppDatabase.createPersistentDatabase(this)
         Stetho.initializeWithDefaults(this)
     }
 

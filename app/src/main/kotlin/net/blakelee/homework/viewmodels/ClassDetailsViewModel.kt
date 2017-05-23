@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import net.blakelee.homework.databases.AppDatabase
 
 class ClassDetailsViewModel(application: Application) : AndroidViewModel(application) {
-    private var db : AppDatabase = AppDatabase.getPersistentDatabase(application)
+    private var db : AppDatabase = AppDatabase.createPersistentDatabase(application)
 
-    fun getClass(id : Long) = db.classModel().getClassesById(id)
+    fun getClass(id : Long) = db.classModel().getClassById(id)
 }
