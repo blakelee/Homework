@@ -10,6 +10,8 @@ class MainItemUI : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
             relativeLayout {
+                id = R.id.classList
+
                 imageView {
                     id = R.id.class_icon
                     leftPadding = dip(16)
