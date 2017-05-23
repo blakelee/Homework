@@ -81,7 +81,6 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
         else
             classDetails = ClassDetails()
 
-
         EditClassUI(classDetails).setContentView(this)
 
         val toolbar = find<Toolbar>(R.id.toolbar_edit)
