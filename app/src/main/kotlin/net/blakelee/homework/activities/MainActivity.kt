@@ -17,12 +17,11 @@ import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.startActivity
 
 class MainActivity : BaseLifecycleActivity<MainActivityViewModel>(), MainInterface {
-    private val adapter = ClassesAdapter(this)
+    private val adapter = ClassesAdapter()
     override val viewModelClass = MainActivityViewModel::class.java
 
     override fun onCreate(savedInstantState: Bundle?) {
         super.onCreate(savedInstantState)
-
         viewModel = ViewModelProviders.of(this).get(viewModelClass)
 
         viewModel.getClasses().observe(this, Observer<List<Classes>> {
@@ -30,7 +29,7 @@ class MainActivity : BaseLifecycleActivity<MainActivityViewModel>(), MainInterfa
         })
 
         MainUI(adapter).setContentView(this)
-        setSupportActionBar(find<Toolbar>(R.id.toolbar_main) as Toolbar?)
+        setSupportActionBar(find<Toolbar>(R.id.toolbar_main))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -23,7 +23,7 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.sync.Mutex
 import net.blakelee.homework.R
-import net.blakelee.homework.adapters.EditClassDayAdapter
+import net.blakelee.homework.adapters.EditClassAdapter
 import net.blakelee.homework.fragments.DayPicker
 import net.blakelee.homework.fragments.TimePicker
 import net.blakelee.homework.interfaces.EditClassInterface
@@ -96,7 +96,7 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
         classId?.let { supportActionBar?.setTitle(R.string.edit_class) }
 
         recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = EditClassDayAdapter(classDetails.weeks.week, this, recycler)
+        recycler.adapter = EditClassAdapter(classDetails.weeks.week, this, recycler)
 
         phoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 

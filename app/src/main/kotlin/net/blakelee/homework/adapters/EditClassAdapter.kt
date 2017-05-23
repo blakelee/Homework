@@ -11,7 +11,7 @@ import net.blakelee.homework.views.items.EditWeekItemUI
 import org.jetbrains.anko.AnkoContext
 import java.util.*
 
-class EditClassDayAdapter(var week: MutableList<Week>, val editClassInterface: EditClassInterface, val recycler: RecyclerView) : RecyclerView.Adapter<EditDaysItemViewHolder>() {
+class EditClassAdapter(var week: MutableList<Week>, val editClassInterface: EditClassInterface, val recycler: RecyclerView) : RecyclerView.Adapter<EditDaysItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditDaysItemViewHolder =
             EditDaysItemViewHolder(EditWeekItemUI().createView(AnkoContext.create(parent.context, parent)))
