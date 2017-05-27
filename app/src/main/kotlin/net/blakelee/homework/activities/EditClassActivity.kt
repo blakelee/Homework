@@ -2,17 +2,15 @@ package net.blakelee.homework.activities
 
 import android.app.Activity
 import android.app.DialogFragment
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.NavUtils
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.*
@@ -23,11 +21,12 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.sync.Mutex
 import net.blakelee.homework.R
-import net.blakelee.homework.adapters.EditClassAdapter
+import net.blakelee.homework.adapters.WeeksAdapter
+import net.blakelee.homework.base.BaseLifecycleActivity
 import net.blakelee.homework.fragments.DayPicker
 import net.blakelee.homework.fragments.TimePicker
 import net.blakelee.homework.interfaces.EditClassInterface
-import net.blakelee.homework.models.ClassDetails
+import net.blakelee.homework.models.Week
 import net.blakelee.homework.utils.BitmapToByteArray
 import net.blakelee.homework.utils.ByteArrayToBitmap
 import net.blakelee.homework.utils.ClassValidation
@@ -38,51 +37,47 @@ import org.jetbrains.anko.*
 import java.io.File
 import java.util.*
 
-class EditClassActivity : AppCompatActivity(), EditClassInterface {
+class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClassInterface {
 
+    override val viewModelClass = EditClassViewModel::class.java
     private val PICTURE_RESULT = 100
     private val imgView by lazy { find<ImageView>(R.id.edit_class_image) }
     private val phoneNumber by lazy { find<EditText>(R.id.phone_number) }
-    private val recycler by lazy { find<RecyclerView>(R.id.days_recycler) }
+    private val adapter = WeeksAdapter(this)
     private val nameText by lazy { find<EditText>(R.id.class_name) }
-    private lateinit var classDetails: ClassDetails
-    private lateinit var viewModel: EditClassViewModel
     private var classId: Long? = null
-
-    override fun onFinishEditDialog(daysSelected: List<Int>, position: Int) {
-        classDetails.weeks.week[position].day = daysSelected
-        recycler.adapter.notifyItemChanged(position)
-    }
-
-    override fun openDaysDialog(daysSelected: List<Int>, position: Int) {
-        val dp = DayPicker(daysSelected, position)
-        dp.show(fragmentManager, "DAY_PICKER")
-    }
-
-    override fun openTimePicker(date: Date, set: (Date) -> Unit) {
-        val tp: DialogFragment = TimePicker(date, set)
-        tp.show(fragmentManager, "TIME_PICKER")
-    }
-
-    override fun setClassDetails(classDetails: ClassDetails) {
-        this.classDetails = classDetails
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val bundle = intent.extras
+
         classId = bundle?.getLong("class_id")
+        viewModel = ViewModelProviders.of(this).get(viewModelClass)
+        viewModel.loadClassById(classId)
 
-        viewModel = ViewModelProviders.of(this).get(EditClassViewModel::class.java)
+        EditClassUI(viewModel.classDetails.value!!, adapter).setContentView(this)
 
-        if (classId != null)
-            classDetails = viewModel.getClass(classId!!)
-        else
-            classDetails = ClassDetails()
+        subscribeWeeks()
+        setupToolbar()
+        setImageIfExists()
 
-        EditClassUI(classDetails).setContentView(this)
+        phoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+    }
 
+    private fun setImageIfExists() {
+        classId?.let {
+            val file: File = File(ctx.filesDir, classId.toString() + "-image")
+
+            if (file.exists()) {
+                val byteArray = file.readBytes()
+                imgView.imageBitmap = ByteArrayToBitmap(byteArray)
+                imgView.scaleType = ImageView.ScaleType.CENTER_CROP
+                imgView.tag = "IMAGE"
+            }
+        }
+    }
+    private fun setupToolbar() {
         val toolbar = find<Toolbar>(R.id.toolbar_edit)
         setSupportActionBar(toolbar)
 
@@ -95,21 +90,39 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
         supportActionBar?.setTitle(R.string.new_class)
         classId?.let { supportActionBar?.setTitle(R.string.edit_class) }
 
-        recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = EditClassAdapter(classDetails.weeks.week, this, recycler)
+    }
+    private fun subscribeWeeks() {
+        viewModel.weeks.observe(this, Observer<MutableList<Week>> {
+            it?.let { adapter.dataSource = it }
+        })
+    }
 
-        phoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+    override fun addWeek() {
+        viewModel.addWeek()
+        adapter.notifyItemInserted(viewModel.weeks.value!!.size - 1)
+    }
 
-        classId?.let {
-            val file: File = File(ctx.filesDir, classId.toString() + "-image")
+    override fun removeWeek(position: Int) {
+        viewModel.removeWeek(position)
+        adapter.notifyItemRemoved(position)
+    }
 
-            if (file.exists()) {
-                val byteArray = file.readBytes()
-                imgView.imageBitmap = ByteArrayToBitmap(byteArray)
-                imgView.scaleType = ImageView.ScaleType.CENTER_CROP
-                imgView.tag = "IMAGE"
-            }
-        }
+    //TODO: notifyitemchanged for time set
+    override fun setStartTime(date: Date, position: Int) {
+        val tp: DialogFragment = TimePicker(date, position, viewModel::setStartTime)
+        tp.show(fragmentManager, "TIME_PICKER")
+    }
+    override fun setEndTime(date: Date, position: Int) {
+        val tp: DialogFragment = TimePicker(date, position, viewModel::setEndTime)
+        tp.show(fragmentManager, "TIME_PICKER")
+    }
+    override fun onFinishEditDialog(daysSelected: List<Int>, position: Int) {
+        viewModel.setDay(daysSelected, position)
+        adapter.notifyItemChanged(position)
+    }
+    override fun openDaysDialog(daysSelected: List<Int>, position: Int) {
+        val dp = DayPicker(daysSelected, position)
+        dp.show(fragmentManager, "DAY_PICKER")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -127,7 +140,7 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
                 return true
             }
             R.id.action_save -> {
-                val result = viewModel.validate(classDetails)
+                val result = viewModel.validate()
 
                 when (result) {
                     ClassValidation.TIME -> alert("Start time must be less than end time") { okButton{} }.show()
@@ -136,9 +149,9 @@ class EditClassActivity : AppCompatActivity(), EditClassInterface {
                     ClassValidation.EMPTY -> nameText.error = "You must have a class name"
                     ClassValidation.SUCCESS -> {
                         if (classId != null)
-                            viewModel.updateClass(classDetails)
+                            viewModel.updateClass()
                         else
-                            viewModel.insertClass(classDetails)
+                            viewModel.insertClass()
 
                         NavUtils.navigateUpFromSameTask(this)
                         return true
