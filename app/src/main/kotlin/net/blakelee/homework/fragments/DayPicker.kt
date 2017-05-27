@@ -16,10 +16,7 @@ class DayPicker(val oldDaysSelected : List<Int>, val position : Int) : DialogFra
         val ba = BooleanArray(7)
         val daysSelected : ArrayList<Int> = ArrayList(oldDaysSelected)
 
-        oldDaysSelected.map {
-            ba[it.toInt()] = true
-        }
-
+        oldDaysSelected.map { ba[it] = true }
 
         with(builder) {
             setTitle("Class Days")
