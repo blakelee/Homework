@@ -3,11 +3,13 @@ package net.blakelee.homework.views
 import android.support.v7.app.AppCompatActivity
 import android.content.Intent
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.ImageView
 import net.blakelee.homework.R
+import net.blakelee.homework.adapters.WeeksAdapter
 import net.blakelee.homework.models.ClassDetails
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
@@ -16,7 +18,7 @@ import org.jetbrains.anko.design.textInputLayout
 import org.jetbrains.anko.percent.percentRelativeLayout
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
-class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActivity> {
+class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter) : AnkoComponent<AppCompatActivity> {
     private val PICTURE_RESULT = 100
 
     override fun createView(ui: AnkoContext<AppCompatActivity>): View = with(ui) {
@@ -72,6 +74,8 @@ class EditClassUI(var classDetails: ClassDetails) : AnkoComponent<AppCompatActiv
                         textView("Class Days *") { textSize = 12f }
                         recyclerView {
                             id = R.id.days_recycler
+                            adapter = weeksAdapter
+                            layoutManager = LinearLayoutManager(ctx)
                         }.lparams(height = wrapContent, width = matchParent)
 
                         textInputLayout {
