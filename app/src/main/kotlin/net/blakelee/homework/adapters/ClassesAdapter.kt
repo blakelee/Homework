@@ -17,7 +17,7 @@ import org.jetbrains.anko.startActivity
 
 class ClassesAdapter : BaseAdapter<Classes, ClassesAdapter.ClassesViewHolder>() {
 
-    override fun getItemViewId(): Int = R.id.classList
+    override fun getItemViewId(): Int = 0
 
     override fun instantiateViewHolder(view: View?): ClassesViewHolder = ClassesViewHolder(view)
 
