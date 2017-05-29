@@ -31,13 +31,10 @@ class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter
                     backgroundColor = ContextCompat.getColor(ctx, R.color.primary)
                     id = R.id.toolbar_edit
                 }
-            }.lparams(width = matchParent)
+            }
 
             scrollView {
-                lparams(width = matchParent, height = matchParent)
-
                 verticalLayout {
-
                     percentRelativeLayout {
                         imageView {
                             id = R.id.edit_class_image
@@ -76,7 +73,7 @@ class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter
                             id = R.id.days_recycler
                             adapter = weeksAdapter
                             layoutManager = LinearLayoutManager(ctx)
-                        }.lparams(height = wrapContent, width = matchParent)
+                        }
 
                         textInputLayout {
                             editText {
@@ -112,7 +109,6 @@ class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter
                         }
 
                         percentRelativeLayout {
-                            lparams(width = matchParent, height = wrapContent)
                             textInputLayout {
                                 id = R.id.phone_number_parent
                                 editText {
@@ -161,7 +157,7 @@ class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter
                         //TODO: Get color of icon if not user icon
 
                         padding = dip(14)
-                    }.lparams(height = matchParent, width = matchParent)
+                    }
                 }
             }
         }
