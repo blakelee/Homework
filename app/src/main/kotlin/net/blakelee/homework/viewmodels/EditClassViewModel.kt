@@ -2,8 +2,9 @@ package net.blakelee.homework.viewmodels
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.MediatorLiveData
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
 import net.blakelee.homework.App
@@ -19,7 +20,7 @@ import java.util.*
 class EditClassViewModel(application: Application) : AndroidViewModel(application), AnkoLogger {
     private var db: AppDatabase = AppDatabase.createPersistentDatabase(application)
     var classDetails: MutableLiveData<ClassDetails> = MutableLiveData()
-    var weeks = MediatorLiveData<MutableList<Week>>()
+    lateinit var weeks : LiveData<MutableList<Week>>
 
     fun insertClass() {
         val id = db.classModel().insertClass(classDetails.value!!)
@@ -37,17 +38,27 @@ class EditClassViewModel(application: Application) : AndroidViewModel(applicatio
         else
             classDetails.value = db.classModel().getClassById(id)
 
-        weeks.addSource(classDetails) {
-            it?.let { weeks.value = it.weeks.week }
-        }
+        weeks = Transformations.map(classDetails, object : ((ClassDetails) -> MutableList<Week>) {
+            override fun invoke(p1: ClassDetails): MutableList<Week> {
+                return p1.weeks.week
+            }
+        })
     }
 
     fun validate() : ClassValidation {
 
-        if (classDetails.value!!.name.isEmpty())
+        val name = classDetails.value!!.name
+        val id = classDetails.value!!.id
+
+        if (name.isEmpty())
             return ClassValidation.EMPTY
 
-        if (db.classModel().findByName(classDetails.value!!.name) != null)
+        if (id != null) {
+            if (db.classModel().findByNameGivenId(name, id) != null)
+                return ClassValidation.CONFLICT
+        }
+
+        else if (db.classModel().findByName(name) != null)
             return ClassValidation.CONFLICT
 
         for(item : Week in classDetails.value!!.weeks.week) {
@@ -79,18 +90,25 @@ class EditClassViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun addWeek() = weeks.value!!.add(weeks.value!!.size, Week())
-    fun removeWeek(position: Int) = weeks.value!!.removeAt(position)
+    fun addWeek() = classDetails.value!!.weeks.week.add(classDetails.value!!.weeks.week.size, Week())
+
+    fun removeWeek(position: Int) {
+        classDetails.value!!.weeks.week.removeAt(position)
+        classDetails.postValue(classDetails.value)
+    }
 
     fun setDay(daysSelected: List<Int>, position: Int) {
-        weeks.value!![position].day = daysSelected
+        classDetails.value!!.weeks.week[position].day = daysSelected
+        classDetails.postValue(classDetails.value)
     }
 
     fun setStartTime(date: Date, position: Int) {
         classDetails.value!!.weeks.week[position].startTime = date
+        classDetails.postValue(classDetails.value)
     }
 
     fun setEndTime(date: Date, position: Int) {
         classDetails.value!!.weeks.week[position].endTime = date
+        classDetails.postValue(classDetails.value)
     }
 }
