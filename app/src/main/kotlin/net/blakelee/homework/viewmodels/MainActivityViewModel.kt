@@ -10,9 +10,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private var db : AppDatabase = AppDatabase.createPersistentDatabase(application)
 
     fun getClasses() : LiveData<List<Classes>> = db.classModel().getClasses()
-    /*fun deleteClass(id: Long) {
+
+    fun deleteClass(id: Long) {
         db.classModel().deleteClass(id)
 
-        //Need to delete images here
-    }*/
+        //TODO: Need to delete images here
+    }
 }

@@ -8,6 +8,7 @@ import android.view.MenuItem
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.ClassesAdapter
 import net.blakelee.homework.base.BaseLifecycleActivity
+import net.blakelee.homework.fragments.ActionDialog
 import net.blakelee.homework.interfaces.MainInterface
 import net.blakelee.homework.models.Classes
 import net.blakelee.homework.viewmodels.MainActivityViewModel
@@ -17,7 +18,7 @@ import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.startActivity
 
 class MainActivity : BaseLifecycleActivity<MainActivityViewModel>(), MainInterface {
-    private val adapter = ClassesAdapter()
+    private val adapter = ClassesAdapter(this)
     override val viewModelClass = MainActivityViewModel::class.java
 
     override fun onCreate(savedInstantState: Bundle?) {
@@ -45,8 +46,9 @@ class MainActivity : BaseLifecycleActivity<MainActivityViewModel>(), MainInterfa
         return super.onOptionsItemSelected(item)
     }
 
-    //TODO: Return dialog with edit and delete options
-    override fun showMenu(name: String, id: Long): Boolean {
+    override fun showMenu(item: Classes): Boolean {
+        val dp = ActionDialog(item, viewModel)
+        dp.show(fragmentManager, "ACTION_DIALOG")
         return true
     }
 }

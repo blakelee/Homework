@@ -1,6 +1,7 @@
 package net.blakelee.homework.interfaces
 
+import net.blakelee.homework.models.Classes
 
 interface MainInterface {
-    fun showMenu(name: String, id: Long) : Boolean
+    fun showMenu(item: Classes) : Boolean
 }
