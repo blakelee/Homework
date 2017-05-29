@@ -55,6 +55,8 @@ class WeeksAdapter(val editClassInterface: EditClassInterface) : BaseAdapter<Wee
 
             if (pos > 0)
                 add_remove.text = "-"
+            else
+                add_remove.text = "+"
         }
     }
 }

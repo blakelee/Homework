@@ -96,18 +96,11 @@ class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClass
             it?.let { adapter.dataSource = it }
         })
     }
-
     override fun addWeek() {
         viewModel.addWeek()
         adapter.notifyItemInserted(viewModel.weeks.value!!.size - 1)
     }
-
-    override fun removeWeek(position: Int) {
-        viewModel.removeWeek(position)
-        adapter.notifyItemRemoved(position)
-    }
-
-    //TODO: notifyitemchanged for time set
+    override fun removeWeek(position: Int) = viewModel.removeWeek(position)
     override fun setStartTime(date: Date, position: Int) {
         val tp: DialogFragment = TimePicker(date, position, viewModel::setStartTime)
         tp.show(fragmentManager, "TIME_PICKER")
@@ -118,7 +111,6 @@ class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClass
     }
     override fun onFinishEditDialog(daysSelected: List<Int>, position: Int) {
         viewModel.setDay(daysSelected, position)
-        adapter.notifyItemChanged(position)
     }
     override fun openDaysDialog(daysSelected: List<Int>, position: Int) {
         val dp = DayPicker(daysSelected, position)
