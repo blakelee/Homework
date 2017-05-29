@@ -16,14 +16,17 @@ interface ClassDao {
     @Query("SELECT name FROM class_details WHERE name = :p0 LIMIT 1")
     fun findByName(name : String) : String?
 
+    @Query("SELECT name FROM class_details WHERE name = :p0 AND id != :p1 LIMIT 1")
+    fun findByNameGivenId(name: String, id: Long?): String?
+
     @Query("SELECT * FROM class_details WHERE id = :p0 LIMIT 1")
     fun getClassById(id : Long) : ClassDetails
 
     @Query("SELECT id, name, weeks, icon FROM class_details")
     fun getClasses() : LiveData<List<Classes>>
 
-    //@Delete
-    //fun deleteClass(id : Long)
+    @Query("DELETE FROM class_details WHERE id = :p0")
+    fun deleteClass(id : Long)
 
     @Update
     fun updateClass(cd : ClassDetails)
