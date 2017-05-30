@@ -22,7 +22,7 @@ interface ClassDao {
     @Query("SELECT * FROM class_details WHERE id = :p0 LIMIT 1")
     fun getClassById(id : Long) : ClassDetails
 
-    @Query("SELECT id, name, weeks, icon FROM class_details")
+    @Query("SELECT id, name, weeks, icon, icon_color FROM class_details")
     fun getClasses() : LiveData<List<Classes>>
 
     @Query("DELETE FROM class_details WHERE id = :p0")
