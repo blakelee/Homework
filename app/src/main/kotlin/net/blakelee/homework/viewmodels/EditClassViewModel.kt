@@ -111,4 +111,12 @@ class EditClassViewModel(application: Application) : AndroidViewModel(applicatio
         classDetails.value!!.weeks.week[position].endTime = date
         classDetails.postValue(classDetails.value)
     }
+
+    fun setIcon(icon: Int) {
+        classDetails.value!!.icon = icon
+    }
+
+    fun setIconColor(color: Int) {
+        classDetails.value!!.icon_color = color
+    }
 }
