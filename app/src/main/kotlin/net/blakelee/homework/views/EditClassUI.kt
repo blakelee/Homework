@@ -2,6 +2,7 @@ package net.blakelee.homework.views
 
 import android.support.v7.app.AppCompatActivity
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -146,15 +147,30 @@ class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter
                             }
                         }
 
-                        textView("Icon") { textSize = 12f }.setOnClickListener {
+                        linearLayout {
+                            verticalLayout {
+                                textView("Icon") { textSize = 12f }
+                                imageButton {
+                                    setImageResource(classDetails.icon)
+                                    leftPadding = dip(16)
+                                    rightPadding = dip(16)
+                                    id = R.id.icon_picker_button
+                                    scaleType = ImageView.ScaleType.FIT_CENTER
+                                }.lparams(height = dip(50), width = dip(100))
+                            }
 
+                            verticalLayout {
+                                textView("Icon Color") { textSize = 12f }
+                                imageButton {
+                                    id = R.id.icon_color_button
+                                    setImageResource(android.R.color.black)
+                                    setColorFilter(classDetails.icon_color, PorterDuff.Mode.SRC_ATOP)
+                                }.lparams(height = dip(50), width = dip(100))
+                            }
                         }
 
                         textView("In class ringer mode") { textSize = 12f }
                         //TODO: Get enum of ringer mode selected
-
-                        textView("Color") { textSize = 12f }
-                        //TODO: Get color of icon if not user icon
 
                         padding = dip(14)
                     }
