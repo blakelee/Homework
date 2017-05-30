@@ -14,6 +14,10 @@
     <item name="toolbar_edit" type="id"/>
     <item name="icon_date" type="id"/>
     <item name="phone_number_parent" type="id"/>
+    <item name="icon_picker" type="id"/>
+    <item name="icon_picker_button" type="id"/>
+    <item name="icon_color_button" type="id"/>
+    <item name="color_picker" type="id"/>
 
     <item name="action_cancel" type="id"/>
     <item name="action_save" type="id"/>
