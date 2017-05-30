@@ -15,7 +15,10 @@ import android.support.v7.widget.Toolbar
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.*
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
+import com.jrummyapps.android.colorpicker.ColorPickerDialog
+import com.jrummyapps.android.colorpicker.ColorPickerDialogListener
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
@@ -24,6 +27,7 @@ import net.blakelee.homework.R
 import net.blakelee.homework.adapters.WeeksAdapter
 import net.blakelee.homework.base.BaseLifecycleActivity
 import net.blakelee.homework.fragments.DayPicker
+import net.blakelee.homework.fragments.IconPicker
 import net.blakelee.homework.fragments.TimePicker
 import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.Week
@@ -37,7 +41,7 @@ import org.jetbrains.anko.*
 import java.io.File
 import java.util.*
 
-class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClassInterface {
+class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClassInterface, ColorPickerDialogListener {
 
     override val viewModelClass = EditClassViewModel::class.java
     private val PICTURE_RESULT = 100
@@ -45,6 +49,8 @@ class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClass
     private val phoneNumber by lazy { find<EditText>(R.id.phone_number) }
     private val adapter = WeeksAdapter(this)
     private val nameText by lazy { find<EditText>(R.id.class_name) }
+    private val iconPicker by lazy { find<ImageButton>(R.id.icon_picker_button) }
+    private val iconColor by lazy { find<ImageButton>(R.id.icon_color_button) }
     private var classId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,8 +69,26 @@ class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClass
         setImageIfExists()
 
         phoneNumber.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+        iconPicker.setOnClickListener {
+            val ip = IconPicker(this)
+            ip.show(fragmentManager, "ICON_PICKER")
+        }
+        iconColor.setOnClickListener {
+            ColorPickerDialog.newBuilder()
+                    .setDialogType(ColorPickerDialog.TYPE_PRESETS)
+                    .setShowAlphaSlider(false)
+                    .setAllowCustom(false)
+                    .setColor(viewModel.classDetails.value!!.icon_color)
+                    .show(this)
+        }
     }
 
+    override fun onColorSelected(dialogId: Int, color: Int) {
+        iconColor.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+        viewModel.setIconColor(color)
+    }
+
+    override fun onDialogDismissed(p0: Int) {} //Do nothing
     private fun setImageIfExists() {
         classId?.let {
             val file: File = File(ctx.filesDir, classId.toString() + "-image")
@@ -108,6 +132,11 @@ class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClass
     override fun setEndTime(date: Date, position: Int) {
         val tp: DialogFragment = TimePicker(date, position, viewModel::setEndTime)
         tp.show(fragmentManager, "TIME_PICKER")
+    }
+
+    override fun setIcon(id: Int) {
+        iconPicker.setImageDrawable(resources.getDrawable(id))
+        viewModel.setIcon(id)
     }
     override fun onFinishEditDialog(daysSelected: List<Int>, position: Int) {
         viewModel.setDay(daysSelected, position)
