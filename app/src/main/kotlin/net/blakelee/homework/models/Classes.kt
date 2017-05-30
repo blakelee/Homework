@@ -9,5 +9,6 @@ class Classes {
 
     @TypeConverters(WeeksConverters::class)
     var weeks : Weeks = Weeks()
-    var icon: String = ""
+    var icon: Int = 0
+    var icon_color: Int = 0
 }
