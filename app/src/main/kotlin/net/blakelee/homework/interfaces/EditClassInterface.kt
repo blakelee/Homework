@@ -9,4 +9,5 @@ interface EditClassInterface {
     fun removeWeek(position: Int)
     fun setStartTime(date: Date, position: Int)
     fun setEndTime(date: Date, position: Int)
+    fun setIcon(id: Int)
 }
