@@ -8,7 +8,7 @@ import android.view.MenuItem
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.ClassesAdapter
 import net.blakelee.homework.base.BaseLifecycleActivity
-import net.blakelee.homework.fragments.ActionDialog
+import net.blakelee.homework.fragments.ActionPicker
 import net.blakelee.homework.interfaces.MainInterface
 import net.blakelee.homework.models.Classes
 import net.blakelee.homework.viewmodels.MainActivityViewModel
@@ -47,7 +47,7 @@ class MainActivity : BaseLifecycleActivity<MainActivityViewModel>(), MainInterfa
     }
 
     override fun showMenu(item: Classes): Boolean {
-        val dp = ActionDialog(item, viewModel)
+        val dp = ActionPicker(item, viewModel)
         dp.show(fragmentManager, "ACTION_DIALOG")
         return true
     }
