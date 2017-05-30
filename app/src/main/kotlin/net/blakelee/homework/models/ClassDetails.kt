@@ -1,6 +1,7 @@
 package net.blakelee.homework.models
 
 import android.arch.persistence.room.*
+import net.blakelee.homework.R
 import net.blakelee.homework.utils.WeeksConverters
 
 @Entity(tableName = "class_details", indices = arrayOf(Index("name", unique = true)))
@@ -15,7 +16,8 @@ class ClassDetails {
     var phone: String = ""
     var hours: Int? = null
     var professor: String = ""
-    var icon: String = ""
+    var icon: Int = R.drawable.psychology_96
+    var icon_color: Int = -16777216
     var ringmode: Int? = null
 
     @TypeConverters(value = WeeksConverters::class)
