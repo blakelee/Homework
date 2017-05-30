@@ -1,6 +1,7 @@
 package net.blakelee.homework.adapters
 
-import android.app.Activity
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -32,7 +33,9 @@ class ClassesAdapter(val mi: MainInterface) : BaseAdapter<Classes, ClassesAdapte
         var id: Long = 0
 
         override fun onBind(item: Classes) {
-            icon.setImageResource(R.drawable.science)
+            icon.setImageResource(item.icon)
+            icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+            icon.setBackgroundColor(item.icon_color)
             name.text = item.name
             times.text = item.weeks.getWeeksAsString()
             id = item.id
