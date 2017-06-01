@@ -14,9 +14,7 @@ import android.support.v4.app.NavUtils
 import android.support.v7.widget.Toolbar
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.*
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
+import android.widget.*
 import com.jrummyapps.android.colorpicker.ColorPickerDialog
 import com.jrummyapps.android.colorpicker.ColorPickerDialogListener
 import com.theartofdev.edmodo.cropper.CropImage
@@ -41,16 +39,17 @@ import org.jetbrains.anko.*
 import java.io.File
 import java.util.*
 
-class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClassInterface, ColorPickerDialogListener {
+class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClassInterface, ColorPickerDialogListener, AdapterView.OnItemSelectedListener {
 
     override val viewModelClass = EditClassViewModel::class.java
     private val PICTURE_RESULT = 100
     private val imgView by lazy { find<ImageView>(R.id.edit_class_image) }
     private val phoneNumber by lazy { find<EditText>(R.id.phone_number) }
-    private val adapter = WeeksAdapter(this)
+    private val weeksAdapter = WeeksAdapter(this)
     private val nameText by lazy { find<EditText>(R.id.class_name) }
     private val iconPicker by lazy { find<ImageButton>(R.id.icon_picker_button) }
     private val iconColor by lazy { find<ImageButton>(R.id.icon_color_button) }
+    private val spinner by lazy { find<Spinner>(R.id.spinner) }
     private var classId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +61,7 @@ class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClass
         viewModel = ViewModelProviders.of(this).get(viewModelClass)
         viewModel.loadClassById(classId)
 
-        EditClassUI(viewModel.classDetails.value!!, adapter).setContentView(this)
+        EditClassUI(viewModel.classDetails.value!!, weeksAdapter).setContentView(this)
 
         subscribeWeeks()
         setupToolbar()
@@ -81,6 +80,7 @@ class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClass
                     .setColor(viewModel.classDetails.value!!.icon_color)
                     .show(this)
         }
+        spinner.onItemSelectedListener = this
     }
 
     override fun onColorSelected(dialogId: Int, color: Int) {
@@ -117,12 +117,12 @@ class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClass
     }
     private fun subscribeWeeks() {
         viewModel.weeks.observe(this, Observer<MutableList<Week>> {
-            it?.let { adapter.dataSource = it }
+            it?.let { weeksAdapter.dataSource = it }
         })
     }
     override fun addWeek() {
         viewModel.addWeek()
-        adapter.notifyItemInserted(viewModel.weeks.value!!.size - 1)
+        weeksAdapter.notifyItemInserted(viewModel.weeks.value!!.size - 1)
     }
     override fun removeWeek(position: Int) = viewModel.removeWeek(position)
     override fun setStartTime(date: Date, position: Int) {
@@ -184,6 +184,12 @@ class EditClassActivity : BaseLifecycleActivity<EditClassViewModel>(), EditClass
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        viewModel.setRingmode(position)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

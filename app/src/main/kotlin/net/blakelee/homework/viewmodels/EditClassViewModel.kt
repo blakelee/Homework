@@ -97,6 +97,10 @@ class EditClassViewModel(application: Application) : AndroidViewModel(applicatio
         classDetails.postValue(classDetails.value)
     }
 
+    fun setRingmode(position: Int) {
+        classDetails.value!!.ringmode = position
+    }
+
     fun setDay(daysSelected: List<Int>, position: Int) {
         classDetails.value!!.weeks.week[position].day = daysSelected
         classDetails.postValue(classDetails.value)

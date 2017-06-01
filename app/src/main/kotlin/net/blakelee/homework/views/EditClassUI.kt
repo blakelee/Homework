@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.WeeksAdapter
@@ -23,6 +24,8 @@ class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter
     private val PICTURE_RESULT = 100
 
     override fun createView(ui: AnkoContext<AppCompatActivity>): View = with(ui) {
+
+        val buttonHeight = dip(50)
 
         verticalLayout {
 
@@ -147,30 +150,53 @@ class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter
                             }
                         }
 
-                        linearLayout {
-                            verticalLayout {
+                        percentRelativeLayout {
+                            lparams(width = matchParent, height = wrapContent)
+
+                            val icon = verticalLayout {
+                                id = View.generateViewId()
                                 textView("Icon") { textSize = 12f }
                                 imageButton {
                                     setImageResource(classDetails.icon)
+                                    background = resources.getDrawable(R.drawable.rounded_left)
                                     leftPadding = dip(16)
                                     rightPadding = dip(16)
                                     id = R.id.icon_picker_button
                                     scaleType = ImageView.ScaleType.FIT_CENTER
-                                }.lparams(height = dip(50), width = dip(100))
+                                }.lparams(height = buttonHeight, width = matchParent)
+                            }.lparams { percentLayoutInfo.widthPercent = 0.25f }
+
+                            val color = verticalLayout {
+                                id = View.generateViewId()
+                                textView("Icon Color") { textSize = 12f }
+                                imageButton {
+                                    rightPadding = 0
+                                    leftPadding = 1
+                                    topPadding = 13
+                                    bottomPadding = 13
+                                    id = R.id.icon_color_button
+                                    background = resources.getDrawable(R.drawable.square)
+                                    setImageResource(android.R.color.black)
+                                    setColorFilter(classDetails.icon_color, PorterDuff.Mode.SRC_ATOP)
+                                }.lparams(height = buttonHeight, width = matchParent)
+                            }.lparams {
+                                percentLayoutInfo.widthPercent = 0.25f
+                                rightOf(icon)
                             }
 
                             verticalLayout {
-                                textView("Icon Color") { textSize = 12f }
-                                imageButton {
-                                    id = R.id.icon_color_button
-                                    setImageResource(android.R.color.black)
-                                    setColorFilter(classDetails.icon_color, PorterDuff.Mode.SRC_ATOP)
-                                }.lparams(height = dip(50), width = dip(100))
+                                textView("In Class Ringer Mode") { textSize = 12f }
+                                spinner {
+                                    id = R.id.spinner
+                                    background = resources.getDrawable(R.drawable.rounded_right)
+                                    adapter = ArrayAdapter<String>(ctx, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.ringmode))
+                                    classDetails.ringmode?.let { setSelection(classDetails.ringmode!!) }
+                                }.lparams(height = buttonHeight, width = matchParent)
+                            }.lparams {
+                                percentLayoutInfo.widthPercent = 0.5f
+                                rightOf(color)
                             }
                         }
-
-                        textView("In class ringer mode") { textSize = 12f }
-                        //TODO: Get enum of ringer mode selected
 
                         padding = dip(14)
                     }

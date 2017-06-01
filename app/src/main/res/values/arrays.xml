@@ -17,4 +17,12 @@
         <item>@drawable/testtube_96</item>
         <item>@drawable/yinyang_96</item>
     </array>
+
+    <string-array name="ringmode">
+        <item>@string/silent</item>
+        <item>@string/vibrate</item>
+        <item>@string/airplane</item>
+        <item>@string/ring</item>
+        <item>@string/none</item>
+    </string-array>
 </resources>

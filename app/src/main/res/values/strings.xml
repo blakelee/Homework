@@ -15,4 +15,10 @@
     <string name="save">Save</string>
     <string name="new_class">New Class</string>
     <string name="edit_class">Edit Class</string>
+    
+    <string name="silent">Silent</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="airplane">Airplane Mode</string>
+    <string name="ring">Ring</string>
+    <string name="none">No Change</string>
 </resources>
