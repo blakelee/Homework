@@ -150,6 +150,7 @@ class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter
                             }
                         }
 
+                        //Icon/Color/Ringer
                         percentRelativeLayout {
                             lparams(width = matchParent, height = wrapContent)
 
@@ -171,9 +172,9 @@ class EditClassUI(var classDetails: ClassDetails, var weeksAdapter: WeeksAdapter
                                 textView("Icon Color") { textSize = 12f }
                                 imageButton {
                                     rightPadding = 0
-                                    leftPadding = 1
-                                    topPadding = 13
-                                    bottomPadding = 13
+                                    leftPadding = 2
+                                    topPadding = dip(5)
+                                    bottomPadding = dip(5)
                                     id = R.id.icon_color_button
                                     background = resources.getDrawable(R.drawable.square)
                                     setImageResource(android.R.color.black)
