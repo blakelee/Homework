@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import com.mikepenz.aboutlibraries.LibsBuilder
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.ClassesAdapter
 import net.blakelee.homework.base.BaseLifecycleActivity
-import net.blakelee.homework.fragments.ActionPicker
+import net.blakelee.homework.pickers.ActionPicker
 import net.blakelee.homework.interfaces.MainInterface
 import net.blakelee.homework.models.Classes
 import net.blakelee.homework.viewmodels.MainActivityViewModel
@@ -40,7 +41,7 @@ class MainActivity : BaseLifecycleActivity<MainActivityViewModel>(), MainInterfa
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
-            R.id.action_about -> startActivity<AboutActivity>()
+            R.id.action_about -> LibsBuilder().start(this) //startActivity<AboutActivity>()
             R.id.action_calandar -> startActivity<CalendarActivity>()
         }
         return super.onOptionsItemSelected(item)
