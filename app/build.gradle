@@ -76,6 +76,11 @@ dependencies {
 
     //Color Picker
     compile 'com.jrummyapps:colorpicker:2.1.6'
+
+    //About Libraries
+    compile('com.mikepenz:aboutlibraries:5.9.6@aar') {
+        transitive = true
+    }
 }
 
 repositories {
