@@ -24,9 +24,9 @@ import kotlinx.coroutines.experimental.sync.Mutex
 import net.blakelee.homework.R
 import net.blakelee.homework.adapters.WeeksAdapter
 import net.blakelee.homework.base.BaseLifecycleActivity
-import net.blakelee.homework.fragments.DayPicker
-import net.blakelee.homework.fragments.IconPicker
-import net.blakelee.homework.fragments.TimePicker
+import net.blakelee.homework.pickers.DayPicker
+import net.blakelee.homework.pickers.IconPicker
+import net.blakelee.homework.pickers.TimePicker
 import net.blakelee.homework.interfaces.EditClassInterface
 import net.blakelee.homework.models.Week
 import net.blakelee.homework.utils.BitmapToByteArray
