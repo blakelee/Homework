@@ -17,8 +17,8 @@ class ClassDetails {
     var hours: Int? = null
     var professor: String = ""
     var icon: Int = R.drawable.psychology_96
-    var icon_color: Int = -16777216
-    var ringmode: Int? = null
+    var icon_color: Int = -16777216 //Black
+    var ringmode: Int? = 3 //No change
 
     @TypeConverters(value = WeeksConverters::class)
     var weeks: Weeks = Weeks()
