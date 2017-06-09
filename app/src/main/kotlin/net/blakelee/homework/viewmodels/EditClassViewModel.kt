@@ -40,7 +40,7 @@ class EditClassViewModel(application: Application) : AndroidViewModel(applicatio
 
         weeks = Transformations.map(classDetails, object : ((ClassDetails) -> MutableList<Week>) {
             override fun invoke(p1: ClassDetails): MutableList<Week> {
-                return p1.weeks.week
+                return p1.weeks
             }
         })
     }
@@ -61,7 +61,7 @@ class EditClassViewModel(application: Application) : AndroidViewModel(applicatio
         else if (db.classModel().findByName(name) != null)
             return ClassValidation.CONFLICT
 
-        for(item : Week in classDetails.value!!.weeks.week) {
+        for(item : Week in classDetails.value!!.weeks) {
             val week = item.day
 
             if (week.isEmpty())
@@ -90,10 +90,10 @@ class EditClassViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun addWeek() = classDetails.value!!.weeks.week.add(classDetails.value!!.weeks.week.size, Week())
+    fun addWeek() = classDetails.value!!.weeks.add(classDetails.value!!.weeks.size, Week())
 
     fun removeWeek(position: Int) {
-        classDetails.value!!.weeks.week.removeAt(position)
+        classDetails.value!!.weeks.removeAt(position)
         classDetails.postValue(classDetails.value)
     }
 
@@ -102,17 +102,17 @@ class EditClassViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun setDay(daysSelected: List<Int>, position: Int) {
-        classDetails.value!!.weeks.week[position].day = daysSelected
+        classDetails.value!!.weeks[position].day = daysSelected
         classDetails.postValue(classDetails.value)
     }
 
     fun setStartTime(date: Date, position: Int) {
-        classDetails.value!!.weeks.week[position].startTime = date
+        classDetails.value!!.weeks[position].startTime = date
         classDetails.postValue(classDetails.value)
     }
 
     fun setEndTime(date: Date, position: Int) {
-        classDetails.value!!.weeks.week[position].endTime = date
+        classDetails.value!!.weeks[position].endTime = date
         classDetails.postValue(classDetails.value)
     }
 
