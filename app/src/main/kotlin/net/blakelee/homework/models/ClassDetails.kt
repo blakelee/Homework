@@ -2,7 +2,7 @@ package net.blakelee.homework.models
 
 import android.arch.persistence.room.*
 import net.blakelee.homework.R
-import net.blakelee.homework.utils.WeeksConverters
+import net.blakelee.homework.utils.WeekConverter
 
 @Entity(tableName = "class_details", indices = arrayOf(Index("name", unique = true)))
 class ClassDetails {
@@ -20,6 +20,6 @@ class ClassDetails {
     var icon_color: Int = -16777216 //Black
     var ringmode: Int? = 3 //No change
 
-    @TypeConverters(value = WeeksConverters::class)
-    var weeks: Weeks = Weeks()
+    @TypeConverters(value = WeekConverter::class)
+    var weeks: MutableList<Week> = mutableListOf(Week())
 }
