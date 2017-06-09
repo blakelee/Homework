@@ -43,7 +43,7 @@ class ClassDetailsMainFragmentUI(val classDetails : ClassDetails) : AnkoComponen
                     textView (classDetails.name)
 
                     textView("Class Days")
-                    for(week : Week in classDetails.weeks.week) {
+                    for(week : Week in classDetails.weeks) {
                         this.addView(WeekItemUI(week).createView(AnkoContext.create(ctx, this)))
                     }
 
