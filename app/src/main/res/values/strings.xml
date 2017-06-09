@@ -5,6 +5,7 @@
     <string name="action_calendar">Calendar</string>
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
+    <string name="action_add">Add</string>
 
     <string name="about_text">This is the about screen giving details about stuff\n\n
         Icons from Icons8.com</string>
@@ -15,9 +16,14 @@
     <string name="save">Save</string>
     <string name="new_class">New Class</string>
     <string name="edit_class">Edit Class</string>
+    <string name="class_details">Class Details</string>
     
     <string name="silent">Silent</string>
     <string name="vibrate">Vibrate</string>
     <string name="airplane">Airplane Mode</string>
     <string name="none">No Change</string>
+    <string name="details">Details</string>
+    <string name="homework">Homework</string>
+    <string name="tests">Tests</string>
+    <string name="notes">Notes</string>
 </resources>

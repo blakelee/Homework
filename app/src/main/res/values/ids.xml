@@ -19,9 +19,21 @@
     <item name="icon_color_button" type="id"/>
     <item name="color_picker" type="id"/>
     <item name="spinner" type="id"/>
+    <item name="class_bottom_nav" type="id"/>
+    <item name="days" type="id"/>
+    <item name="type" type="id"/>
+    <item name="remove" type="id"/>
 
     <item name="action_cancel" type="id"/>
     <item name="action_save" type="id"/>
+    <item name="action_calendar" type="id"/>
+    <item name="action_add" type="id"/>
+    <item name="homework_recycler" type="id"/>
+
+    <item name="date" type="id"/>
+    <item name="name" type="id"/>
+    <item name="details" type="id"/>
+    <item name="color" type="id"/>
 
     <item name="days_list" type="id"/>
     <item name="day_picker" type="id"/>
