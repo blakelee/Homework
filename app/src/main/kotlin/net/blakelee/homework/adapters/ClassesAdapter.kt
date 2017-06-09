@@ -37,10 +37,10 @@ class ClassesAdapter(val mi: MainInterface) : BaseAdapter<Classes, ClassesAdapte
             icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
             icon.setBackgroundColor(item.icon_color)
             name.text = item.name
-            times.text = item.weeks.getWeeksAsString()
+            times.text = item.getWeeksAsString()
             id = item.id
 
-            itemView.setOnClickListener { itemView.context.startActivity<ClassDetailsActivity>("class_id" to id) }
+            itemView.setOnClickListener { itemView.context.startActivity<ClassDetailsActivity>("class_id" to id, "color" to item.icon_color) }
             itemView.setOnLongClickListener { mi.showMenu(item) }
         }
     }
