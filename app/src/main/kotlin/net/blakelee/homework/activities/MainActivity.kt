@@ -42,7 +42,7 @@ class MainActivity : BaseLifecycleActivity<MainActivityViewModel>(), MainInterfa
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
             R.id.action_about -> LibsBuilder().start(this) //startActivity<AboutActivity>()
-            R.id.action_calandar -> startActivity<CalendarActivity>()
+            R.id.action_calendar -> startActivity<CalendarActivity>()
         }
         return super.onOptionsItemSelected(item)
     }
