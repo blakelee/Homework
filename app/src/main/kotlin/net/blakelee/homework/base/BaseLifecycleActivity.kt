@@ -7,6 +7,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
+//This code written by Ihor Kucherenko as part of Android-Architecture-Components
+
 @Suppress("LeakingThis")
 abstract class BaseLifecycleActivity<T : AndroidViewModel> : AppCompatActivity(), LifecycleRegistryOwner {
 
