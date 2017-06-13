@@ -23,6 +23,8 @@
         <activity android:name=".activities.ClassDetailsActivity"/>
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/CropTheme"/>
+        <activity android:name=".activities.EditHomeworkActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>
