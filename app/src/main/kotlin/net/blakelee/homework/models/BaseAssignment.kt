@@ -14,10 +14,10 @@ open class BaseAssignment {
     var description: String = ""
 
     @TypeConverters(DateConverter::class)
-    var due: Date? = null
+    var due: Date? = Date(2017, 5, 12)
 
     @TypeConverters(ReminderConverter::class)
-    var reminders: MutableList<Reminder>? = null
+    var reminders: MutableList<Reminder> = mutableListOf()
 
     @Ignore
     var time : DateFormat = SimpleDateFormat("h:mma", Locale.getDefault())
