@@ -10,7 +10,7 @@ data class Day (
     fun  getDay(): String {
         day?.let {
             val fixedDay : Date = day!!.clone() as Date
-            fixedDay.year = fixedDay.year - 1900
+            fixedDay.year = fixedDay.year - 1900 //Java.time sucks so freaking bad
             return DateFormat.getDateInstance(DateFormat.LONG).format(fixedDay)
         }
 
