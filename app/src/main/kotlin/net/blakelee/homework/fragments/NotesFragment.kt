@@ -22,7 +22,7 @@ class NotesFragment(val classId: Long, val color: Int): BaseLifecycleFragment<No
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         menu?.clear()
-        inflater?.inflate(R.menu.class_details_alt, menu)
+        inflater?.inflate(R.menu.class_details_main, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 }
