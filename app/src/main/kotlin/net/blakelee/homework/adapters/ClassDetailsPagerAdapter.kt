@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import net.blakelee.homework.fragments.ClassDetailsMainFragment
 import net.blakelee.homework.fragments.HomeworkFragment
 import net.blakelee.homework.fragments.NotesFragment
-import net.blakelee.homework.fragments.TestsFragment
+import net.blakelee.homework.fragments.ExamFragment
 
 class ClassDetailsPagerAdapter(fragmentManager: FragmentManager, var numTabs: Int, val classId: Long, val color: Int) : FragmentStatePagerAdapter(fragmentManager){
 
@@ -16,7 +16,7 @@ class ClassDetailsPagerAdapter(fragmentManager: FragmentManager, var numTabs: In
         when (position) {
             0 -> return ClassDetailsMainFragment(classId)
             1 -> return HomeworkFragment(classId, color)
-            2 -> return TestsFragment(classId, color)
+            2 -> return ExamFragment(classId, color)
             3 -> return NotesFragment(classId, color)
             else -> return null
         }

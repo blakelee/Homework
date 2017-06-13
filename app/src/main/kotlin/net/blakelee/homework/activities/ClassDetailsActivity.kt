@@ -35,7 +35,7 @@ class ClassDetailsActivity : AppCompatActivity() {
         val tabLayout = find<TabLayout>(R.id.tab_layout)
         tabLayout.addTab(tabLayout.newTab().setText("Details"))
         tabLayout.addTab(tabLayout.newTab().setText("Homework"))
-        tabLayout.addTab(tabLayout.newTab().setText("Tests"))
+        tabLayout.addTab(tabLayout.newTab().setText("Exams"))
         tabLayout.addTab(tabLayout.newTab().setText("Notes"))
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
