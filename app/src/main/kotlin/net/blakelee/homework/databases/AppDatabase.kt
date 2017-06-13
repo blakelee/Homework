@@ -5,15 +5,16 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import net.blakelee.homework.models.ClassDetails
+import net.blakelee.homework.models.Exam
 import net.blakelee.homework.models.Homework
 
-@Database(entities = arrayOf(ClassDetails::class, Homework::class), version = 1)
+@Database(entities = arrayOf(ClassDetails::class, Homework::class, Exam::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun classModel() : ClassDao
     abstract fun homeworkModel(): HomeworkDao
-    abstract fun testsModel(): TestsDao
-    abstract fun notesModel(): NotesDao
+    abstract fun examModel(): ExamDao
+    abstract fun noteModel(): NoteDao
 
     companion object {
         private const val NAME = "app.db"
