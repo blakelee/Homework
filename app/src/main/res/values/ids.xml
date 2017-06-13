@@ -23,6 +23,9 @@
     <item name="days" type="id"/>
     <item name="type" type="id"/>
     <item name="remove" type="id"/>
+    <item name="add" type="id"/>
+    <item name="assignment" type="id"/>
+    <item name="reminder_text" type="id"/>
 
     <item name="action_cancel" type="id"/>
     <item name="action_save" type="id"/>

@@ -19,6 +19,9 @@ interface HomeworkDao {
     @Delete
     fun deleteHomework(hw: Homework)
 
+    @Query("DELETE FROM homework WHERE id = :id")
+    fun deleteAllHomework(id: Long)
+
     @Update
     fun updateHomework(hw: Homework)
 }
