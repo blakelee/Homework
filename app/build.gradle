@@ -52,7 +52,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile 'com.github.salomonbrys.kotson:kotson:2.5.0'
     compile 'com.facebook.stetho:stetho:1.5.0'
-    compile 'com.theartofdev.edmodo:android-image-cropper:2.4.4'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.4.6'
 
     //Room Persistence Library, Lifecycles, LiveData, and ViewModel
     compile "android.arch.persistence.room:runtime:$architecture_version"
