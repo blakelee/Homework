@@ -26,13 +26,11 @@ class HomeworkFragment(val classId: Long, val color: Int): BaseLifecycleFragment
     private val fab by lazy { find<FloatingActionButton>(R.id.fab_main) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return AssignmentUI(adapter).createView(AnkoContext.create(ctx, this))
+        return AssignmentUI(adapter, classId).createView(AnkoContext.create(ctx, this))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        AssignmentUI(adapter).createView(AnkoContext.create(ctx, this))
 
         setHasOptionsMenu(true)
         observeLiveData()
