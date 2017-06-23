@@ -52,3 +52,17 @@ fun getHour(hour : Int, minute : Int) : Date {
 
     return cal.time
 }
+
+fun Date(hour: Int, minute: Int): Date {
+    val date = Date()
+    date.hours = hour
+    date.minutes = minute
+    return date
+}
+
+fun Calendar.trim() {
+    this.set(Calendar.HOUR_OF_DAY, 0)
+    this.set(Calendar.MINUTE, 0)
+    this.set(Calendar.SECOND, 0)
+    this.set(Calendar.MILLISECOND, 0)
+}
