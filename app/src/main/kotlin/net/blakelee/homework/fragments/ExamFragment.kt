@@ -25,7 +25,7 @@ class ExamFragment(val classId: Long, val color: Int): BaseLifecycleFragment<Exa
     private val homework: List<Exam> = listOf(Exam(), Exam())
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return AssignmentUI(adapter).createView(AnkoContext.create(ctx, this))
+        return AssignmentUI(adapter, classId).createView(AnkoContext.create(ctx, this))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
