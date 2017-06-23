@@ -1,5 +1,7 @@
 package net.blakelee.homework.views
 
+import android.app.Activity
+import android.content.Context
 import android.content.res.ColorStateList
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -15,7 +17,7 @@ import org.jetbrains.anko.design.coordinatorLayout
 import org.jetbrains.anko.design.floatingActionButton
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
-class AssignmentUI<out T: RecyclerView.Adapter<*>>(val listAdapter: T): AnkoComponent<Fragment> {
+class AssignmentUI<out T: RecyclerView.Adapter<*>>(val listAdapter: T, id: Long): AnkoComponent<Fragment> {
     override fun createView(ui: AnkoContext<Fragment>): View {
         return with(ui) {
             coordinatorLayout {
@@ -38,4 +40,5 @@ class AssignmentUI<out T: RecyclerView.Adapter<*>>(val listAdapter: T): AnkoComp
             }
         }
     }
+
 }
