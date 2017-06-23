@@ -49,6 +49,10 @@ class EditHomeworkViewModel(application: Application): AndroidViewModel(applicat
         homework.postValue(homework.value)
     }
 
+    fun setDate(date: Date) {
+        homework.value!!.due = date
+    }
+
     fun setTime(time: Date, position: Int) {
         homework.value!!.reminders[position].time = time
         homework.postValue(homework.value)
