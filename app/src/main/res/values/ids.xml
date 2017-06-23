@@ -37,6 +37,7 @@
     <item name="name" type="id"/>
     <item name="details" type="id"/>
     <item name="color" type="id"/>
+    <item name="day" type="id"/>
 
     <item name="days_list" type="id"/>
     <item name="day_picker" type="id"/>

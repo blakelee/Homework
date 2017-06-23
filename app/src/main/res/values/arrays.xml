@@ -24,4 +24,10 @@
         <item>@string/airplane</item>
         <item>@string/none</item>
     </string-array>
+
+    <string-array name="notification_type">
+        <item>@string/notification</item>
+        <item>@string/vibrate</item>
+        <item>@string/ring</item>
+    </string-array>
 </resources>

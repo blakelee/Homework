@@ -29,4 +29,6 @@
     <string name="homework">Homework</string>
     <string name="tests">Tests</string>
     <string name="notes">Notes</string>
+    <string name="notification">Notification</string>
+    <string name="ring">Ring</string>
 </resources>
